@@ -1,6 +1,8 @@
-import 'package:cari_magang_fe/components/appcolors.dart';
-import 'package:cari_magang_fe/presentation/login_screen.dart';
-import 'package:cari_magang_fe/presentation/splash_screen.dart';
+import 'package:cari_magang_fe/app/core/components/appcolors.dart';
+import 'package:cari_magang_fe/app/presentation/getstarted_screen.dart';
+import 'package:cari_magang_fe/app/presentation/register_screen.dart';
+import 'package:cari_magang_fe/app/presentation/splash_screen.dart';
+import 'package:cari_magang_fe/app/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
+        '/getstarted': (context) => const GetstartedScreen(),
         '/login': (context) => const LoginScreen(),
+        '/Register': (context) => const RegisterScreen(),
       },
     );
   }
