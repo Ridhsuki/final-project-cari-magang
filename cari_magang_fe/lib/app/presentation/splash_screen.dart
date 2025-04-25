@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:cari_magang_fe/components/appcolors.dart';
+import 'package:cari_magang_fe/app/core/components/appcolors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,8 +13,8 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login');
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/getstarted');
     });
   }
 
