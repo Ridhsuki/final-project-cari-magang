@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['user', 'company', 'admin'])->default('user');
             $table->string('profile_picture')->nullable();
-            $table->rememberToken();        
+            $table->rememberToken();
+            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
