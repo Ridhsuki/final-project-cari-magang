@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'profile_picture',
     ];
 
     /**
@@ -43,5 +45,33 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+    public function companyProfile()
+    {
+        return $this->hasOne(CompanyProfile::class);
+    }
+    public function internships()
+    {
+        return $this->hasMany(Internship::class);
+    }
+    public function applications()
+    {
+        return $this->hasMany(InternshipApplication::class);
+    }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    public function sentNotifications()
+    {
+        return $this->hasMany(Notification::class, 'sender_id');
+    }
+    public function receivedNotifications()
+    {
+        return $this->hasMany(Notification::class, 'receiver_id');
     }
 }
