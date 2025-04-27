@@ -65,7 +65,6 @@ class DummyData extends Seeder
 
             CompanyProfile::create([
                 'user_id' => $companyUser->id,
-                'company_name' => $faker->company,
                 'description' => $faker->paragraph,
                 'address' => $faker->address,
                 'email' => $companyUser->email,

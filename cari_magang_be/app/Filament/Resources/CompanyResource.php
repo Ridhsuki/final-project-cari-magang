@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -44,7 +45,7 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('company_name')->label('Company Name')->searchable(),
+                TextColumn::make('user.name')->label('Company Name')->searchable(),
                 TextColumn::make('email'),
                 TextColumn::make('phone'),
             ])
@@ -56,8 +57,12 @@ class CompanyResource extends Resource
                     Tables\Actions\ViewAction::make()
                         ->form([
                             Grid::make(2)->schema([
-                                TextInput::make('company_name'),
-                                TextInput::make('email'),
+                                Placeholder::make('user.name')
+                                ->label('Company Name')
+                                ->content(fn($record) => $record->user?->name ?? '-'),
+                                Placeholder::make('email')
+                                ->label('Email')
+                                ->content(fn($record) => $record->email ?? '-'),
                                 TextInput::make('phone'),
                                 TextInput::make('address'),
                                 RichEditor::make('description'),
