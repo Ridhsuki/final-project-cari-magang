@@ -1,5 +1,6 @@
-import 'package:cari_magang_fe/app/core/components/appcolors.dart';
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/presentation/getstarted_screen.dart';
+import 'package:cari_magang_fe/app/presentation/main_screen.dart';
 import 'package:cari_magang_fe/app/presentation/register_screen.dart';
 import 'package:cari_magang_fe/app/presentation/splash_screen.dart';
 import 'package:cari_magang_fe/app/presentation/login_screen.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/getstarted': (context) => const GetstartedScreen(),
         '/login': (context) => const LoginScreen(),
-        '/Register': (context) => const RegisterScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/main': (context) => const MainScreen(),
       },
     );
   }
