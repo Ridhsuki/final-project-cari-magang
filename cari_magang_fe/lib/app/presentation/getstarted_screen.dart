@@ -1,6 +1,6 @@
-import 'package:cari_magang_fe/app/core/components/assets_const.dart';
+import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:flutter/material.dart';
-import 'package:cari_magang_fe/app/core/components/appcolors.dart';
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 
 class GetstartedScreen extends StatelessWidget {
   const GetstartedScreen({super.key});

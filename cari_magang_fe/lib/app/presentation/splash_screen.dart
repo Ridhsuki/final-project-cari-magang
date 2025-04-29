@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:cari_magang_fe/app/core/components/appcolors.dart';
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

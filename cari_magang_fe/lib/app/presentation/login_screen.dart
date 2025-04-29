@@ -1,5 +1,5 @@
-import 'package:cari_magang_fe/app/core/components/appcolors.dart';
-import 'package:cari_magang_fe/app/core/components/assets_const.dart';
+import 'package:cari_magang_fe/app/core/appcolors.dart';
+import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -73,112 +73,122 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Container(
                 color: Color(0xffffffff),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 42,
-                  vertical: 43,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Login with email address',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.email_outlined),
-                        hintText: 'Email Address',
-                        labelText: 'Email Address',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                child: SingleChildScrollView(
+                  // <- Tambahkan ini
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 42,
+                    vertical: 43,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Login with email address',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: const Icon(Icons.visibility),
-                        hintText: 'Password',
-                        labelText: 'Password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                      const SizedBox(height: 24),
+                      TextField(
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.email_outlined),
+                          hintText: 'Email Address',
+                          labelText: 'Email Address',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: const [
-                            Checkbox(value: false, onChanged: null),
-                            Text('Remember me', style: TextStyle(fontSize: 12)),
-                          ],
+                      const SizedBox(height: 16),
+                      TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: const Icon(Icons.visibility),
+                          hintText: 'Password',
+                          labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
-                        Flexible(
-                          child: TextButton(
-                            onPressed: () {},
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: const [
+                              Checkbox(value: false, onChanged: null),
+                              Text(
+                                'Remember me',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Flexible(
+                            child: TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                  color: Color(0xffF66527),
+                                  fontSize: 12,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 88),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/main');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffF66527),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                          ),
+                          child: const Text(
+                            'Continue',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Color(0xffffffff),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5), // Ganti Spacer ke SizedBox
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don’t have an account? ",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/register');
+                            },
                             child: const Text(
-                              'Forgot Password?',
+                              "Sign up",
                               style: TextStyle(
                                 color: Color(0xffF66527),
                                 fontSize: 12,
+                                fontWeight: FontWeight.w500,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 68),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffF66527),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                        ),
-                        child: const Text(
-                          'Continue',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xffffffff),
-                          ),
-                        ),
+                        ],
                       ),
-                    ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Don’t have an account? ",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: const Text(
-                            "Sign up",
-                            style: TextStyle(
-                              color: Color(0xffF66527),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                  ],
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ),
             ),
