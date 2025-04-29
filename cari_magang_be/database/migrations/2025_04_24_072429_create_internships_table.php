@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('location')->nullable();
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
             $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->enum('system', ['remote', 'on-site'])->default('on-site');
             $table->timestamps();
         });
     }

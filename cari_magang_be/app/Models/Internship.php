@@ -13,6 +13,7 @@ class Internship extends Model
         'location',
         'category_id',
         'status',
+        'system',
     ];
 
     public function company()
