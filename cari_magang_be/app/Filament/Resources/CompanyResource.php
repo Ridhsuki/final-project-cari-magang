@@ -46,7 +46,7 @@ class CompanyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')->label('Company Name')->searchable(),
-                TextColumn::make('email'),
+                TextColumn::make('user.email'),
                 TextColumn::make('phone'),
             ])
             ->filters([
@@ -58,13 +58,14 @@ class CompanyResource extends Resource
                         ->form([
                             Grid::make(2)->schema([
                                 Placeholder::make('user.name')
-                                ->label('Company Name')
-                                ->content(fn($record) => $record->user?->name ?? '-'),
-                                Placeholder::make('email')
-                                ->label('Email')
-                                ->content(fn($record) => $record->email ?? '-'),
-                                TextInput::make('phone'),
-                                TextInput::make('address'),
+                                    ->label('Company Name')
+                                    ->content(fn($record) => $record->user?->name ?? '-'),
+                                Placeholder::make('user.email')
+                                    ->content(fn($record) => $record->user?->email ?? '-'),
+                                Placeholder::make('phone')
+                                    ->content(fn($record) => $record->phone ?? '-'),
+                                Placeholder::make('address')
+                                    ->content(fn($record) => $record->address ?? '-'),
                                 RichEditor::make('description'),
                                 FileUpload::make('profile_picture')->label('Company Logo'),
                                 DateTimePicker::make('created_at')

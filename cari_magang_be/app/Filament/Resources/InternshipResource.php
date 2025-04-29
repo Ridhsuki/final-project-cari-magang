@@ -115,19 +115,31 @@ class InternshipResource extends Resource
                                     ->label('Category')
                                     ->options(Category::all()->pluck('name', 'id'))
                                     ->required(),
-                                TextInput::make('location')
-                                    ->nullable()
-                                    ->maxLength(255),
-                                Placeholder::make('status')
-                                    ->label('Status')
-                                    ->content(function ($record) {
-                                        $color = match ($record->status) {
-                                            'paid' => '#6BBF59',  
-                                            'unpaid' => '#F4A259',
-                                            'default' => '#A0AEC0'
-                                        };
-                                        return new HtmlString("<span style='background-color: {$color}; color: white; padding: 0.2em 0.6em; border-radius: 0.3em; font-size: 0.9em; text-transform: capitalize;'>{$record->status}</span>");
-                                    }),
+                                Grid::make(3)->schema([
+                                    TextInput::make('location')
+                                        ->nullable()
+                                        ->maxLength(255),
+                                    Placeholder::make('status')
+                                        ->label('Status')
+                                        ->content(function ($record) {
+                                            $color = match ($record->status) {
+                                                'paid' => '#6BBF59',
+                                                'unpaid' => '#F4A259',
+                                                'default' => '#A0AEC0'
+                                            };
+                                            return new HtmlString("<span style='background-color: {$color}; color: white; padding: 0.2em 0.6em; border-radius: 0.3em; font-size: 0.9em; text-transform: capitalize;'>{$record->status}</span>");
+                                        }),
+                                    Placeholder::make('system')
+                                        ->label('System')
+                                        ->content(function ($record) {
+                                            $color = match ($record->system) {
+                                                'remote' => '#38B2AC',
+                                                'on-site' => '#F56565',
+                                                'default' => '#A0AEC0'
+                                            };
+                                            return new HtmlString("<span style='background-color: {$color}; color: white; padding: 0.2em 0.6em; border-radius: 0.3em; font-size: 0.9em; text-transform: capitalize;'>{$record->system}</span>");
+                                        }),
+                                ]),
                                 Grid::make(1)->schema([
                                     RichEditor::make('description'),
                                 ]),

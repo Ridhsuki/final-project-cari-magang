@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(request $request)
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -35,8 +35,10 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Login berhasil!',
-            'token' => $token,
-            'user' => $user
+            'data' => [
+                'token' => $token,
+                'user' => $user
+            ]
         ], 200);
     }
 

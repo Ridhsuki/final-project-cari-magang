@@ -19,13 +19,16 @@ class DummyData extends Seeder
 {
     public function run(): void
     {
+        $companyNames = ['PT. RIdho tech','CV. Jalan Monas','IDN Foundation','PT. DEF','Yayasan Solo Peduli'];
+
+        $categoryNames = ['IT','Design','Marketing','Finance','HR'];
         $faker = Faker::create();
 
         // Buat kategori
         $categories = [];
-        for ($i = 0; $i < 5; $i++) {
+        foreach ($categoryNames as $name) {
             $categories[] = Category::create([
-                'name' => $faker->word,
+                'name' => $name,
             ]);
         }
 
@@ -37,7 +40,7 @@ class DummyData extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'user',
-                'profile_picture' => null,
+                'profile_picture' => 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg',
                 'remember_token' => Str::random(10),
             ]);
 
@@ -54,7 +57,7 @@ class DummyData extends Seeder
         // Buat user company + profil perusahaan
         for ($i = 0; $i < 5; $i++) {
             $companyUser = User::create([
-                'name' => $faker->company,
+                'name' => $companyNames[$i],
                 'email' => $faker->unique()->companyEmail,
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
@@ -67,7 +70,6 @@ class DummyData extends Seeder
                 'user_id' => $companyUser->id,
                 'description' => $faker->paragraph,
                 'address' => $faker->address,
-                'email' => $companyUser->email,
                 'phone' => $faker->phoneNumber,
             ]);
 
@@ -80,6 +82,7 @@ class DummyData extends Seeder
                     'location' => $faker->city,
                     'category_id' => $faker->randomElement($categories)->id,
                     'status' => $faker->randomElement(['paid', 'unpaid']),
+                    'system' => $faker->randomElement(['remote', 'on-site']),
                 ]);
 
                 // Buat aplikasi random dari user ke internship ini
