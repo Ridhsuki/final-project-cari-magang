@@ -16,6 +16,11 @@ class Internship extends Model
         'system',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function company()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -35,7 +40,7 @@ class Internship extends Model
     {
         return $this->hasMany(Favorite::class);
     }
-    
+
     public function notifications()
     {
         return $this->hasMany(Notification::class);

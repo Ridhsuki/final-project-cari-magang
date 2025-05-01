@@ -11,15 +11,27 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        if ($user->role === 'company') {
-            $user->load('companyProfile');
-        } else if ($user->role === 'user') {
+        // Tentukan data dasar
+        $responseData = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'profile_picture' => $user->profile_picture ? asset('storage/profile_pictures/' . $user->profile_picture) : null,
+            'role' => $user->role,
+        ];
+
+        // Tambahkan relasi sesuai role
+        if ($user->role === 'user') {
             $user->load('profile');
+            $responseData['profile'] = $user->profile;
+        } elseif ($user->role === 'company') {
+            $user->load('companyProfile');
+            $responseData['companyProfile'] = $user->companyProfile;
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $user,
+            'data' => $responseData,
         ], 200);
     }
 
@@ -29,13 +41,20 @@ class ProfileController extends Controller
 
         $request->validate([
             'name' => 'string',
-            'profile_picture' => 'nullable|url',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user->update([
-            'name' => $request->name ?? $user->name,
-            'profile_picture' => $request->profile_picture ?? $user->profile_picture,
-        ]);
+        if ($request->hasFile('profile_picture')) {
+            // dd($request->file('profile_picture')); 
+            $profilePicture = $request->file('profile_picture');
+            $profilePictureName = strtolower(str_replace(' ', '_', $user->name)) . '_' . time() . '.' . $profilePicture->getClientOriginalExtension();
+            $profilePicture->storeAs('profile_pictures', $profilePictureName, 'public');
+
+            $user->profile_picture = $profilePictureName;
+        }
+
+        $user->name = $request->name ?? $user->name;
+        $user->save();
 
         if ($user->role === 'company') {
             $request->validate([
@@ -76,10 +95,25 @@ class ProfileController extends Controller
             ], 400);
         }
 
+        $responseData = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'profile_picture' => $user->profile_picture ? asset('storage/profile_pictures/' . $user->profile_picture) : null,
+            'role' => $user->role,
+        ];
+
+        // Tambahkan relasi sesuai role
+        if ($user->role === 'user') {
+            $responseData['profile'] = $user->profile;
+        } elseif ($user->role === 'company') {
+            $responseData['companyProfile'] = $user->companyProfile;
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Profil berhasil diupdate!',
-            'data' => $user,
+            'data' => $responseData,
         ], 200);
     }
 }

@@ -17,6 +17,11 @@ return new class extends Migration
             $table->foreignId('internship_id')->constrained()->onDelete('cascade');
             $table->string('cv');
             $table->string('certificate')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('full_name')->nullable();
+            $table->string('date_of_birth')->nullable();
+            $table->text('address')->nullable();
+            $table->string('education')->nullable();
             $table->timestamps();
         });
     }

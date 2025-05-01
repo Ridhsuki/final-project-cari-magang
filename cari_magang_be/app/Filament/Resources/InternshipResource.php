@@ -102,6 +102,13 @@ class InternshipResource extends Resource
                 SelectFilter::make('category_id')
                     ->label('Category')
                     ->relationship('category', 'name'),
+                SelectFilter::make('company_id')
+                    ->label('Company')
+                    ->relationship(
+                        'company',
+                        'name',
+                        fn($query) => $query->where('role', 'company') // filter hanya user company
+                    ),
             ])
 
             ->actions([
