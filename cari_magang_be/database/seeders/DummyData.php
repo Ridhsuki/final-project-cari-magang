@@ -40,7 +40,7 @@ class DummyData extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'user',
-                'profile_picture' => 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg',
+                'profile_picture' => 'default.png',
                 'remember_token' => Str::random(10),
             ]);
 
@@ -93,6 +93,11 @@ class DummyData extends Seeder
                         'internship_id' => $internship->id,
                         'cv' => 'cv_' . $applicant->id . '.pdf',
                         'certificate' => rand(0, 1) ? 'cert_' . $applicant->id . '.pdf' : null,
+                        'status' => $faker->randomElement(['pending', 'approved', 'rejected']),
+                        'full_name' => $applicant->name,
+                        'date_of_birth' => $applicant->profile->date_of_birth,
+                        'address' => $applicant->profile->address,
+                        'education' => $applicant->profile->education,
                     ]);
 
                     // Tambah ke favorit juga

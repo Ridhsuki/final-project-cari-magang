@@ -13,6 +13,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -22,6 +23,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class UserResource extends Resource
 {
@@ -34,7 +36,7 @@ class UserResource extends Resource
     {
         return false;
     }
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -47,7 +49,16 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('profile_picture')->circular(),
+                ImageColumn::make('profile_picture')
+                    ->label('Profile Picture')
+                    ->circular()
+                    ->size(50)
+                    ->getStateUsing(function ($record) {
+                        if ($record->profile_picture) {
+                            return asset('storage/profile_pictures/' . $record->profile_picture);
+                        }
+                        return asset('storage/profile_pictures/default.png');
+                    }),
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),
                 TextColumn::make('profile.phone')->label('Phone')->searchable()->copyable(),
@@ -72,8 +83,14 @@ class UserResource extends Resource
                                 Placeholder::make('education')
                                     ->label('Education')
                                     ->content(fn($record) => $record->profile?->education ?? '-'),
-                                FileUpload::make('profile_picture')
-                                    ->default(fn($record) => $record->profile?->profile_picture),
+                                Placeholder::make('profile_picture')
+                                    ->label('Profile Picture')
+                                    ->content(function ($record) {
+                                        $imageUrl = $record->profile_picture
+                                            ? asset('storage/profile_pictures/' . $record->profile_picture)
+                                            : asset('storage/profile_pictures/default.png');
+                                        return new HtmlString("<img src='$imageUrl' style='width: 200px; height: 200px; object-fit: cover;'>");
+                                    }),
                                 DateTimePicker::make('created_at')
                                     ->label('Created At')
                                     ->displayFormat('d M Y H:i')

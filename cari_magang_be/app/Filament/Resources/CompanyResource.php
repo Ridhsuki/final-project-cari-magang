@@ -17,10 +17,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class CompanyResource extends Resource
 {
@@ -45,8 +47,18 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('user.profile_picture')
+                    ->label('Logo')
+                    ->circular()
+                    ->size(50)
+                    ->getStateUsing(function ($record) {
+                        if ($record->user->profile_picture) {
+                            return asset('storage/profile_pictures/' . $record->user->profile_picture);
+                        }
+                        return asset('storage/profile_pictures/default.png');
+                    }),
                 TextColumn::make('user.name')->label('Company Name')->searchable(),
-                TextColumn::make('user.email'),
+                TextColumn::make('user.email')->label('Email')->searchable(),
                 TextColumn::make('phone'),
             ])
             ->filters([
@@ -67,7 +79,15 @@ class CompanyResource extends Resource
                                 Placeholder::make('address')
                                     ->content(fn($record) => $record->address ?? '-'),
                                 RichEditor::make('description'),
-                                FileUpload::make('profile_picture')->label('Company Logo'),
+                                Placeholder::make('profile_picture')
+                                    ->label('Company Logo')
+                                    ->content(function ($record) {
+                                        $imageUrl = $record->profile_picture
+                                            ? asset("storage/profile_pictures/{$record->user->profile_picture}")
+                                            : asset('storage/profile_pictures/default.png');
+                                        return new HtmlString("<img src='$imageUrl' style='width: 200px; height: 200px; object-fit: cover;'>");
+                                    }),
+
                                 DateTimePicker::make('created_at')
                                     ->label('Created At')
                                     ->displayFormat('d M Y H:i'),

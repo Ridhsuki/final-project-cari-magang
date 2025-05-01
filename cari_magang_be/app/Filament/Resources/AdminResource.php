@@ -5,12 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AdminResource\Pages;
 use App\Filament\Resources\AdminResource\RelationManagers;
 use App\Models\User;
+use Faker\Provider\Image;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -53,6 +55,16 @@ class AdminResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('user.profile_picture')
+                    ->label('Logo')
+                    ->circular()
+                    ->size(50)
+                    ->getStateUsing(function ($record) {
+                        if ($record->profile_picture) {
+                            return asset('storage/profile_pictures/' . $record->profile_picture);
+                        }
+                        return asset('storage/profile_pictures/default.png');
+                    }),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
                 TextColumn::make('created_at')->dateTime('F d, Y')->sortable(),
@@ -66,8 +78,8 @@ class AdminResource extends Resource
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ]);
-          
-            
+
+
     }
 
     public static function getRelations(): array
