@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NotificationController extends Controller
 {
@@ -22,7 +23,27 @@ class NotificationController extends Controller
     }
     public function markAsRead($id)
     {
-        $notif = Notification::findOrFail($id);
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|uuid',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'ID tidak valid. Harus berupa UUID.',
+            ], 400);
+        }
+
+        $notif = Notification::where('id', $id)
+            ->where('receiver_id', auth()->id())
+            ->first();
+
+        if (!$notif) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Notifikasi tidak ditemukan atau bukan milik Anda.',
+            ], 404);
+        }
 
         if ($notif->receiver_id !== auth()->id()) {
             return response()->json([
@@ -40,7 +61,27 @@ class NotificationController extends Controller
     }
     public function destroy($id)
     {
-        $notif = Notification::findOrFail($id);
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|uuid',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'ID tidak valid. Harus berupa UUID.',
+            ], 400);
+        }
+
+        $notif = Notification::where('id', $id)
+            ->where('receiver_id', auth()->id())
+            ->first();
+
+        if (!$notif) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Notifikasi tidak ditemukan atau bukan milik Anda.',
+            ], 404);
+        }
 
         if ($notif->receiver_id !== auth()->id()) {
             return response()->json([

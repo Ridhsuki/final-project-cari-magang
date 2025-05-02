@@ -85,7 +85,6 @@ class InternshipResource extends Resource
                 TextColumn::make('category.name')
                     ->label('Category')
                     ->sortable(),
-                // TextColumn::make('location'),
                 TextColumn::make('status')
                     ->badge()
                     ->colors([
