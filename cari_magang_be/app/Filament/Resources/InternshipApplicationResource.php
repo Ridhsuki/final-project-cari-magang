@@ -67,9 +67,9 @@ class InternshipApplicationResource extends Resource
                     ->label('Status')
                     ->formatStateUsing(function ($state) {
                         $colors = [
-                            'pending' => '#facc15',  // gold/yellow
-                            'approved' => '#4ade80', // soft green
-                            'rejected' => '#f87171', // soft red
+                            'pending' => '#facc15', 
+                            'approved' => '#4ade80',
+                            'rejected' => '#f87171',
                         ];
 
                         $color = $colors[$state] ?? '#d1d5db'; // fallback gray
@@ -123,12 +123,12 @@ class InternshipApplicationResource extends Resource
                                     ->content(function ($record) {
                                         $status = $record->status;
                                         $colors = [
-                                            'pending' => '#facc15',  // gold/yellow
-                                            'approved' => '#4ade80', // soft green
-                                            'rejected' => '#f87171', // soft red
+                                            'pending' => '#facc15',
+                                            'approved' => '#4ade80',
+                                            'rejected' => '#f87171',
                                         ];
 
-                                        $color = $colors[$status] ?? '#d1d5db'; // fallback gray
+                                        $color = $colors[$status] ?? '#d1d5db';
                             
                                         return new HtmlString("
                                             <span style='
@@ -200,7 +200,7 @@ class InternshipApplicationResource extends Resource
                                     ])
                                     ->collapsible()
                                     ->collapsed(),
-                                Section::make('Internship Details')
+                                Section::make('Documents')
                                     ->schema([
                                         Grid::make(2)->schema([
                                             PdfViewerField::make('cv')
@@ -217,7 +217,7 @@ class InternshipApplicationResource extends Resource
                                                 ->visible(fn($record) => filled($record->certificate)),
                                             Placeholder::make('certificate_placeholder')
                                                 ->label('Certificate')
-                                                ->content('Tidak ada Certificate')
+                                                ->content('No certificate')
                                                 ->visible(fn($record) => empty($record->certificate)),
                                         ]),
 

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Internship;
 use App\Models\InternshipApplication;
 use App\Models\Notification;
+use App\Models\User;
+use App\Notifications\UserAppliedNotification;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -120,15 +123,22 @@ class InternshipApplicationController extends Controller
 
         $internship = Internship::findOrFail($request->internship_id);
 
+
         Notification::create([
-            'sender_id' => $user->id,
+            'id' => (string) Str::uuid(),
+            'sender_id' => auth()->id(),
             'receiver_id' => $internship->user_id,
             'internship_id' => $internship->id,
             'type' => 'user_applied',
-            'message' => $user->name . ' telah melamar ke ' . $internship->title,
+            'message' => auth()->user()->name . ' telah melamar ke "' . $internship->title . '"',
+            'notifiable_id' => $application->id,
+            'notifiable_type' => InternshipApplication::class,
+            'is_read' => false,
         ]);
 
-        // Kirim respons
+        // $receiver = User::find($internship->user_id);
+        // $receiver->notify(new UserAppliedNotification($application));
+
         return response()->json([
             'status' => 'success',
             'message' => 'Berhasil mengajukan lamaran, silakan tunggu konfirmasi dari perusahaan',
