@@ -45,7 +45,6 @@ class ProfileController extends Controller
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            // dd($request->file('profile_picture')); 
             $profilePicture = $request->file('profile_picture');
             $profilePictureName = strtolower(str_replace(' ', '_', $user->name)) . '_' . time() . '.' . $profilePicture->getClientOriginalExtension();
             $profilePicture->storeAs('profile_pictures', $profilePictureName, 'public');

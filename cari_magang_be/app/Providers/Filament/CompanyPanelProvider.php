@@ -54,6 +54,7 @@ class CompanyPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->spa();
     }
 }
