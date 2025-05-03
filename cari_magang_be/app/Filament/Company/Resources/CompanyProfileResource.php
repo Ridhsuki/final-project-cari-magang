@@ -10,7 +10,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Actions\Action as FormAction;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
+use Illuminate\Support\HtmlString;
 
 class CompanyProfileResource extends Resource
 {
@@ -53,32 +56,61 @@ class CompanyProfileResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('user.profile_picture')
+                    ->label('Logo')
+                    ->circular()
+                    ->size(50)
+                    ->getStateUsing(function ($record) {
+                        if ($record->user->profile_picture) {
+                            return asset('storage/profile_pictures/' . $record->user->profile_picture);
+                        }
+                        return asset('default.png');
+                    }),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Company Name'),
                 Tables\Columns\TextColumn::make('user.email')->label('Email'),
-
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make()
                     ->form([
-                        Forms\Components\Textarea::make('description')
-                            ->label('Company Description')
-                            ->maxLength(500)
-                            ->disabled()
-                            ->rows(4)
-                            ->columnSpan(2),
+                        Grid::make(2)->schema([
+                            Placeholder::make('profile_picture')
+                                ->label('Company Logo')
+                                ->content(function ($record) {
+                                    $imageUrl = $record->user->profile_picture
+                                        ? asset('storage/profile_pictures/' . $record->user->profile_picture)
+                                        : asset('storage/profile_pictures/default.png');
+                                    return new HtmlString("<img src='$imageUrl' style='width: 200px; height: 200px; object-fit: cover;'>");
+                                }),
+                            Forms\Components\Textarea::make('description')
+                                ->label('Company Description')
+                                ->maxLength(500)
+                                ->disabled()
+                                ->cols(16)
+                                ->rows(8),
+                        ]),
                         Forms\Components\TextInput::make('address')
                             ->label('Address')
                             ->maxLength(255)
                             ->disabled(),
-                        Forms\Components\TextInput::make('phone')
+                        Placeholder::make('phone')
                             ->label('Phone Number')
-                            ->tel()
-                            ->numeric()
-                            ->maxLength(20)
-                            ->disabled(),
-                    ]),
+                            ->content(fn($record) => $record->phone),
+                        Grid::make(2)->schema([
+                            Placeholder::make('created_at')
+                                ->label('Created At')
+                                ->content(fn($record) => $record->created_at->format('d M Y H:i:s')),
+                            Placeholder::make('updated_at')
+                                ->label('Updated At')
+                                ->content(fn($record) => $record->updated_at->format('d M Y H:i:s')),
+                        ]),
+                        Forms\Components\Actions::make([
+                            FormAction::make('edit')
+                                ->label('Edit Profile')
+                                ->url(fn() => route('profile.edit'))
+                                ->icon('heroicon-o-pencil')
+                        ])->fullWidth(),
+                    ])
             ]);
     }
 

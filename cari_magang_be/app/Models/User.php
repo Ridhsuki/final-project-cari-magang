@@ -80,14 +80,12 @@ class User extends Authenticatable implements FilamentUser
     }
     public function canAccessPanel(Panel $panel): bool
     {
-        
-        // if ($panel->getId() === 'admin' && $roles->contains('admin')) {
-        //     return true;
-        // } else if ($panel->getId() === 'company' && $roles->contains('company')) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
-        return Auth::user()->role === 'admin' || Auth::user()->role === 'company';
+        if ($panel->getId() === 'admin' && $this->role === 'admin') {
+            return true;
+        }
+        if ($panel->getId() === 'company' && $this->role === 'company') {
+            return true;
+        }
+        return false;
     }
 }

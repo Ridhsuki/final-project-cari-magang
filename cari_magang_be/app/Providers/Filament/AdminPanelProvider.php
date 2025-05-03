@@ -10,7 +10,6 @@ use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -34,9 +33,9 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => '#F66527',
             ])
             ->navigationItems([
-                NavigationItem::make('Landing Page')
-                    ->icon('heroicon-o-device-phone-mobile')
-                    ->url('/')
+                NavigationItem::make('Source')
+                    ->icon('heroicon-o-code-bracket')
+                    ->url('https://github.com/Ridhsuki/final-project-cari-magang')
                     ->group('Others')
                     ->sort('3')
             ])
