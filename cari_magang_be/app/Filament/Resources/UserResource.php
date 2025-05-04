@@ -118,5 +118,4 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
         ];
     }
-
 }

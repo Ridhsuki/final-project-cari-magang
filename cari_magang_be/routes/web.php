@@ -1,8 +1,9 @@
 <?php
 
-use App\Livewire\Company;
 use App\Livewire\Login;
 use App\Livewire\Register;
+use App\Livewire\Company;
+use App\Livewire\ComingSoon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/company/edit', Company::class)->name('profile.edit');
 });
 
-Route::view('/coming-soon', 'coming-soon')->name('comingsoon');
+Route::get('/coming-soon', ComingSoon::class)->name('comingsoon');

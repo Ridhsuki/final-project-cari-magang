@@ -42,12 +42,12 @@
             <div class="flex items-center justify-between py-4">
                 <div class="text-2xl font-bold text-[#F66527]">Cari Magang</div>
                 <div class="hidden md:flex space-x-6">
-                    <a href="#lowongan" class="text-[#2D1E1B] hover:text-[#F66527]">Lowongan</a>
-                    <a href="#fitur" class="text-[#2D1E1B] hover:text-[#F66527]">Fitur</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#2D1E1B] hover:text-[#F66527]">Team kami</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#2D1E1B] hover:text-[#F66527]">Fitur</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('login') }}" wire:navigate class="text-[#2D1E1B] hover:text-[#F66527]">Masuk</a>
-                    <a href="#daftar"
+                    <a href="{{ route('login') }}" wire:navigate
                         class="px-5 py-2 bg-[#F66527] text-white font-medium rounded-lg shadow-lg hover:bg-[#d8561e]">
                         Coba Sekarang
                     </a>
@@ -71,11 +71,11 @@
                         karirmu sekarang!
                     </p>
                     <div class="flex justify-center lg:justify-start space-x-4">
-                        <a href="#lowongan"
+                        <a href="{{ route('comingsoon') }}" wire:navigate
                             class="px-5 py-3 bg-[#F66527] text-white font-medium rounded-lg shadow-lg hover:bg-[#d8561e]">
                             Lihat Lowongan
                         </a>
-                        <a href="#fitur"
+                        <a href="{{ route('comingsoon') }}" wire:navigate
                             class="px-5 py-3 bg-white text-[#F66527] border border-[#F66527] font-medium rounded-lg hover:bg-[#FFE3D8]">
                             Fitur Aplikasi
                         </a>
@@ -106,16 +106,33 @@
     <!-- Footer -->
     <footer class="bg-[#2D1E1B] text-[#FFF8F4]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div class="hidden md:flex flex-row justify-between items-center">
                 <div class="text-xl font-bold">CariMagang</div>
                 <div class="flex space-x-8">
-                    <a href="#tentang" class="hover:text-[#F66527]">Tentang</a>
-                    <a href="#kebijakan" class="hover:text-[#F66527]">Kebijakan Privasi</a>
-                    <a href="#syarat" class="hover:text-[#F66527]">Syarat & Ketentuan</a>
-                    <a href="#bantuan" class="hover:text-[#F66527]">Bantuan</a>
-                    <a href="https://github.com/Ridhsuki/final-project-cari-magang" target="_blank" class="hover:text-[#F66527]">GitHub</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Tentang</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Kebijakan Privasi</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Syarat &
+                        Ketentuan</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Bantuan</a>
+                    <a href="https://github.com/Ridhsuki/final-project-cari-magang" target="_blank"
+                        class="hover:text-[#F66527]">GitHub</a>
                 </div>
                 <div class="text-sm text-[#FFE3D8]">© 2025 CariMagang. All rights reserved.</div>
+            </div>
+
+            <div class="md:hidden flex flex-col items-center space-y-4 text-center">
+                <div class="text-xl font-bold">CariMagang</div>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527] text-sm">Tentang</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527] text-sm">Kebijakan
+                        Privasi</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527] text-sm">Syarat &
+                        Ketentuan</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527] text-sm">Bantuan</a>
+                    <a href="https://github.com/Ridhsuki/final-project-cari-magang" target="_blank"
+                        class="hover:text-[#F66527] text-sm">GitHub</a>
+                </div>
+                <div class="text-xs text-[#FFE3D8]">© 2025 CariMagang. All rights reserved.</div>
             </div>
         </div>
     </footer>

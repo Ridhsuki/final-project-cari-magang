@@ -82,9 +82,7 @@ class CompanyResource extends Resource
                                 Placeholder::make('profile_picture')
                                     ->label('Company Logo')
                                     ->content(function ($record) {
-                                        $imageUrl = $record->profile_picture
-                                            ? asset("storage/profile_pictures/{$record->user->profile_picture}")
-                                            : asset('storage/profile_pictures/default.png');
+                                        $imageUrl = asset("storage/profile_pictures/{$record->user->profile_picture}");
                                         return new HtmlString("<img src='$imageUrl' style='width: 200px; height: 200px; object-fit: cover;'>");
                                     }),
 

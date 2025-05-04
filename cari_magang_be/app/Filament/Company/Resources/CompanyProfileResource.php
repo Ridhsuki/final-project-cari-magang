@@ -80,7 +80,7 @@ class CompanyProfileResource extends Resource
                                     $imageUrl = $record->user->profile_picture
                                         ? asset('storage/profile_pictures/' . $record->user->profile_picture)
                                         : asset('storage/profile_pictures/default.png');
-                                    return new HtmlString("<img src='$imageUrl' style='width: 200px; height: 200px; object-fit: cover;'>");
+                                    return new HtmlString("<img src='$imageUrl' style='width: 200px; height: 200px; object-fit: cover; border-radius: 50%;' alt='Company Logo' />");
                                 }),
                             Forms\Components\Textarea::make('description')
                                 ->label('Company Description')
