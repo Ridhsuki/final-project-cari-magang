@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/presentation/main/insiders/help_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -22,17 +23,17 @@ class SettingsScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 40),
-
-            // Status Lamaran
             _buildSettingsItem('Status Lamaran'),
-
-            // Help & Support
-            _buildSettingsItem('Help & Support'),
-
-            // Delete Account
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const HelpScreen()),
+                );
+              },
+              child: _buildSettingsItem('Help & Support'),
+            ),
             _buildSettingsItem('Delete Account'),
-
-            // Change Password
             _buildSettingsItem('Change Password'),
           ],
         ),

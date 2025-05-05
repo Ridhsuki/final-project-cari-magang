@@ -1,3 +1,5 @@
+import 'package:cari_magang_fe/app/core/components/jobcard.dart';
+import 'package:cari_magang_fe/app/presentation/main/insiders/jobdetail_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -82,12 +85,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: JobCard(
-                        title: 'UI/UX Designer',
-                        company: 'PT. Jaya Makmur',
-                        location: 'Semarang',
-                        workplace: index % 2 == 0 ? 'On site' : 'Remote',
-                        salaryType: index % 2 == 0 ? 'Paid' : 'Unpaid',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (_) => JobDetailScreen(
+                                    job: {
+                                      'title': 'UI/UX Designer',
+                                      'salary': 'Rp. 2,000,000 / month',
+                                      'qualification': 'Fresh Graduate',
+                                      'location': 'Semarang',
+                                      'workplace':
+                                          index % 2 == 0 ? 'On site' : 'Remote',
+                                      'salaryType':
+                                          index % 2 == 0 ? 'Paid' : 'Unpaid',
+                                      'submission': 'Lamar Dengan CV',
+                                      'company': 'PT. Jaya Makmur',
+                                      'recruiter':
+                                          'Rekruter - Bagas\nAktif 2 menit yang lalu',
+                                      'description':
+                                          'Sebagai Desainer UI/UX, Anda akan bertanggung jawab...',
+                                      'duties': [
+                                        'Mengembangkan konsep desain sesuai kebutuhan pengguna.',
+                                        'Membuat wireframes, mockups, dan prototype.',
+                                        'Melakukan riset pengguna dan uji kegunaan.',
+                                        'Berkoordinasi dengan tim dev untuk implementasi.',
+                                        'Menyelesaikan masalah desain UI dan memberikan solusi kreatif.',
+                                        'Menyajikan desain dan menerima feedback.',
+                                      ],
+                                      'requirements': [
+                                        'Mahasiswa aktif atau lulusan baru bidang Desain/Informatika.',
+                                        'Paham dasar desain UI/UX.',
+                                        'Mahir pakai Adobe XD, Figma, atau Sketch.',
+                                        'Mampu bekerja individu/tim.',
+                                        'Pengetahuan HTML/CSS nilai tambah.',
+                                        'Terbuka dengan feedback dan revisi.',
+                                      ],
+                                    },
+                                  ),
+                            ),
+                          );
+                        },
+                        child: JobCard(
+                          title: 'UI/UX Designer',
+                          company: 'PT. Jaya Makmur',
+                          location: 'Semarang',
+                          workplace: index % 2 == 0 ? 'On site' : 'Remote',
+                          salaryType: index % 2 == 0 ? 'Paid' : 'Unpaid',
+                        ),
                       ),
                     );
                   },
@@ -96,69 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class JobCard extends StatelessWidget {
-  final String title;
-  final String company;
-  final String location;
-  final String workplace;
-  final String salaryType;
-
-  const JobCard({
-    super.key,
-    required this.title,
-    required this.company,
-    required this.location,
-    required this.workplace,
-    required this.salaryType,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.orange.shade50,
-        border: Border.all(color: Colors.orange),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Job Title
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Colors.orange,
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Company and Location
-          Text('$company\n$location', style: const TextStyle(fontSize: 14)),
-          const SizedBox(height: 12),
-
-          // Workplace and Salary
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                workplace,
-                style: const TextStyle(fontSize: 12, color: Colors.orange),
-              ),
-              Text(
-                salaryType,
-                style: const TextStyle(fontSize: 12, color: Colors.orange),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
