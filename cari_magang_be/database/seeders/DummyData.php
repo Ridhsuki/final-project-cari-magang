@@ -91,7 +91,7 @@ class DummyData extends Seeder
                     InternshipApplication::create([
                         'user_id' => $applicant->id,
                         'internship_id' => $internship->id,
-                        'cv' => 'sample.pdf',
+                        'cv' => 'cv/sample.pdf',
                         'certificate' => rand(0, 1) ? 'cert_' . $applicant->id . '.pdf' : null,
                         'status' => $faker->randomElement(['pending', 'approved', 'rejected']),
                         'full_name' => $applicant->name,
