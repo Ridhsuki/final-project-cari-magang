@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
@@ -13,8 +14,16 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/getstarted');
+    Future.delayed(Duration(seconds: 2), () {
+      var token = LocalStorage.getToken();
+
+      if (token != null) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacementNamed(context, '/main');
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacementNamed(context, '/getstarted');
+      }
     });
   }
 
