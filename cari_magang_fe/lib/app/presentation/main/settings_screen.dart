@@ -1,9 +1,15 @@
+import 'package:cari_magang_fe/app/core/components/logout_dialog.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/help_screen.dart';
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +39,22 @@ class SettingsScreen extends StatelessWidget {
               },
               child: _buildSettingsItem('Help & Support'),
             ),
-            _buildSettingsItem('Delete Account'),
             _buildSettingsItem('Change Password'),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder:
+                      (_) => LogoutDialog(
+                        onConfirm: () {
+                          // Logika logout atau navigasi ke login
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                      ),
+                );
+              },
+              child: _buildSettingsItem('Log Out'),
+            ),
           ],
         ),
       ),
