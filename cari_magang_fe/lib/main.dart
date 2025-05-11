@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/cubit/regist_cubit/regist_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:cari_magang_fe/app/presentation/login_screen.dart';
 import 'package:cari_magang_fe/app/presentation/main_screen.dart';
 import 'package:cari_magang_fe/app/presentation/register_screen.dart';
 import 'package:cari_magang_fe/app/presentation/splash_screen.dart';
-import 'package:cari_magang_fe/app/cubit/cubit/auth_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/login_cubit/login_cubit.dart';
 import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
 
 void main() async {
@@ -17,7 +18,8 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthCubit()), // AuthCubit di sini
+        BlocProvider(create: (_) => LoginCubit()),
+        BlocProvider(create: (_) => RegisterCubit()),
         BlocProvider(
           create: (context) => ProfileCubit()..getUser(),
         ), // ProfileCubit di sini

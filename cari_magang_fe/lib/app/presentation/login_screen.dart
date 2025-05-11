@@ -1,9 +1,9 @@
-import 'package:cari_magang_fe/app/cubit/cubit/auth_state.dart';
+import 'package:cari_magang_fe/app/cubit/login_cubit/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
-import 'package:cari_magang_fe/app/cubit/cubit/auth_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/login_cubit/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final password = passwordController.text.trim();
 
     if (email.isNotEmpty && password.isNotEmpty) {
-      context.read<AuthCubit>().doLogin(email, password);
+      context.read<LoginCubit>().doLogin(email, password);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<LoginCubit, LoginState>(
       listenWhen:
           (previous, current) =>
               current.loginResponse != previous.loginResponse ||
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
           Navigator.pushReplacementNamed(context, '/main');
-          context.read<AuthCubit>().resetState();
+          context.read<LoginCubit>().resetState();
         }
 
         if (state.error != '') {
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           );
-          context.read<AuthCubit>().resetState();
+          context.read<LoginCubit>().resetState();
         }
       },
       child: Scaffold(
