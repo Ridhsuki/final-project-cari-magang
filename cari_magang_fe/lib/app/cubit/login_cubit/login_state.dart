@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:cari_magang_fe/data/models/login_response/login_response.dart';
-import 'package:cari_magang_fe/data/models/login_error.dart';
 
-class AuthState extends Equatable {
-  const AuthState({
+class LoginState extends Equatable {
+  const LoginState({
     this.loginResponse = const LoginResponse(),
     this.isLoading = false,
     this.error = '',
@@ -16,12 +15,12 @@ class AuthState extends Equatable {
   @override
   List<Object> get props => [loginResponse, isLoading, error];
 
-  AuthState copyWith({
+  LoginState copyWith({
     LoginResponse? loginResponse,
     bool? isLoading,
     String? error,
   }) {
-    return AuthState(
+    return LoginState(
       loginResponse: loginResponse ?? this.loginResponse,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
