@@ -167,7 +167,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
           top: 40,
           left: 16,
           child: CircleAvatar(
-            backgroundColor: Colors.black.withOpacity(0.2),
+            backgroundColor: Colors.black.withAlpha((0.2 * 255).toInt()),
             child: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
@@ -182,7 +182,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
           top: 40,
           right: 16,
           child: CircleAvatar(
-            backgroundColor: Colors.black.withOpacity(0.2),
+            backgroundColor: Colors.black.withAlpha((0.2 * 255).toInt()),
             child: IconButton(
               icon: Icon(
                 isBookmarked ? Icons.bookmark : Icons.bookmark_border,

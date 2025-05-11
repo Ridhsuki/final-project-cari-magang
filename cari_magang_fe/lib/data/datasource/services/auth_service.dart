@@ -14,7 +14,7 @@ class AuthService {
         'https://magangapp.ridhsuki.my.id/api/login',
         data: {"email": email, "password": password},
       );
-      print(response.data);
+      // print(response.data);
       var dataResponse = LoginResponse.fromMap(response.data);
       return Right(dataResponse);
     } on DioException catch (e) {

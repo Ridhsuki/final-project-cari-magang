@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:cari_magang_fe/data/models/login_response/login_response.dart';
-import 'package:cari_magang_fe/data/models/login_error.dart';
 
 class AuthState extends Equatable {
   const AuthState({
