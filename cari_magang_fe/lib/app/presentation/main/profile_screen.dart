@@ -49,8 +49,7 @@ class _ContentState extends State<_Content> {
           if (!state.isLoading) {
             if (state.error.isNotEmpty) {
               showCustomSnackBar(context, state.error, false);
-            } else if (state.updateSuccess &&
-                state.message.isNotEmpty) {
+            } else if (state.updateSuccess && state.message.isNotEmpty) {
               showCustomSnackBar(context, state.message, state.updateSuccess);
             }
           }

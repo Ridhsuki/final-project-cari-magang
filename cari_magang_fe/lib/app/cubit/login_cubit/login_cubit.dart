@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:cari_magang_fe/app/cubit/cubit/auth_state.dart';
+import 'package:cari_magang_fe/app/cubit/login_cubit/login_state.dart';
 import 'package:cari_magang_fe/data/datasource/services/auth_service.dart';
 import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthState());
+class LoginCubit extends Cubit<LoginState> {
+  LoginCubit() : super(LoginState());
 
   Future<void> doLogin(String email, String password) async {
     emit(state.copyWith(isLoading: true));
@@ -25,6 +25,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void resetState() {
-    emit(AuthState());
+    emit(LoginState());
   }
 }
