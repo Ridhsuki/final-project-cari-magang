@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
@@ -13,7 +14,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init(); // Tambahkan ini agar Hive siap
 
-  runApp(BlocProvider(create: (context) => AuthCubit(), child: const MyApp()));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()), // AuthCubit di sini
+        BlocProvider(
+          create: (context) => ProfileCubit()..getUser(),
+        ), // ProfileCubit di sini
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
