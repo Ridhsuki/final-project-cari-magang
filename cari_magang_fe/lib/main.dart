@@ -1,4 +1,5 @@
 import 'package:cari_magang_fe/app/cubit/regist_cubit/regist_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
@@ -19,6 +20,9 @@ void main() async {
       providers: [
         BlocProvider(create: (_) => LoginCubit()),
         BlocProvider(create: (_) => RegisterCubit()),
+        BlocProvider(
+          create: (context) => ProfileCubit()..getUser(),
+        ), // ProfileCubit di sini
       ],
       child: const MyApp(),
     ),
