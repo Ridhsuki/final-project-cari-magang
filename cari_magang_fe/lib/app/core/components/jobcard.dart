@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:flutter/material.dart';
 
 class JobCard extends StatelessWidget {
@@ -18,30 +19,35 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: GestureDetector(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Appcolors.primaryColor,
+                  fontSize: 18,
+                ),
               ),
-              const SizedBox(height: 4),
-              Text(company, style: const TextStyle(color: Colors.grey)),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
+              Text(
+                company,
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+              const SizedBox(height: 6),
               Row(
                 children: [
-                  Icon(Icons.location_on, size: 16, color: Colors.grey[600]),
+                  Icon(Icons.location_on, size: 14, color: Colors.grey[600]),
                   const SizedBox(width: 4),
-                  Text(location),
+                  Text(location, style: TextStyle(fontSize: 13)),
                   const Spacer(),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -72,7 +78,7 @@ class JobCard extends StatelessWidget {
               Text(
                 workplace,
                 style: TextStyle(
-                  color: Colors.blueGrey[600],
+                  color: Appcolors.primaryColor,
                   fontStyle: FontStyle.italic,
                 ),
               ),

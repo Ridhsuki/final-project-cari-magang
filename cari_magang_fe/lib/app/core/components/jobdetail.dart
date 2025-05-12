@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/stringconst/bulletlist.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/applyjob_screen.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
+                        color: Appcolors.primaryColor
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -129,28 +131,31 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                     BulletList(items: widget.requirements),
                     const SizedBox(height: 24),
                     Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ApplyjobScreen(),
+                      child: SizedBox(
+                        width: 180,
+                        height: 38,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ApplyjobScreen(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22),
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 60,
-                            vertical: 16,
+                            padding:
+                                EdgeInsets
+                                    .zero,
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          child: const Text(
+                            'Apply now',
+                            style: TextStyle(color: Colors.white),
                           ),
-                        ),
-                        child: const Text(
-                          'Apply now',
-                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
