@@ -88,7 +88,7 @@ class _ContentState extends State<_Content> {
                     const Text(
                       'Profile',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const Center(
               child: Text(
                 'Settings',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
 

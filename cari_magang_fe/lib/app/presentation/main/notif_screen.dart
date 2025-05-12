@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:flutter/material.dart';
 
 class NotifScreen extends StatelessWidget {
@@ -29,13 +30,63 @@ class NotifScreen extends StatelessWidget {
       body: ListView.separated(
         itemCount: notifications.length,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        separatorBuilder: (context, index) => Divider(color: Colors.grey[300]),
+        separatorBuilder: (context, index) => SizedBox(height: 8),
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(
-              notifications[index],
-              style: TextStyle(fontSize: 14, color: Colors.black87),
+          return Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Appcolors.primaryColor.withAlpha((0.4 * 255).toInt()),
+                  blurRadius: 1,
+                  offset: Offset(0, 1), // Bayangan ke bawah
+                ),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 34,
+                  height: 34,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(17),
+                    child: Image.network(
+                      'https://magangapp.ridhsuki.my.id/storage/profile_pictures/idn.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    notifications[index],
+                    style: TextStyle(fontSize: 12, color: Colors.black87),
+                    softWrap: true,
+                  ),
+                ),
+                PopupMenuButton<String>(
+                  borderRadius: BorderRadius.circular(24),
+                  onSelected: (value) {
+                    if (value == 'delete') {
+                      // TODO: handle delete
+                    } else if (value == 'read') {
+                      // TODO: handle mark as read
+                    }
+                  },
+                  itemBuilder:
+                      (context) => [
+                        PopupMenuItem(
+                          value: 'read',
+                          child: Text('Mark as read'),
+                        ),
+                        PopupMenuItem(value: 'delete', child: Text('Delete')),
+                      ],
+                  icon: Icon(Icons.more_vert),
+                ),
+              ],
             ),
           );
         },
