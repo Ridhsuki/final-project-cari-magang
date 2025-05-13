@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
@@ -39,19 +41,32 @@ class ProfileService {
     required String dateOfBirth,
     required String address,
     required String education,
+    File? profilePicture,
   }) async {
     try {
-      var response = await dio.post(
-        '/profile',
-        data: {
-          'name': name,
-          'place_of_birth': placeOfBirth,
-          'date_of_birth': dateOfBirth,
-          'address': address,
-          'education': education,
-        },
-      );
-      return Right(response.data['message'] ?? 'profile berhasil di perbarui');
+      FormData formData = FormData.fromMap({
+        'name': name,
+        'place_of_birth': placeOfBirth,
+        'date_of_birth': dateOfBirth,
+        'address': address,
+        'education': education,
+      });
+
+      if (profilePicture != null) {
+        String fileName = profilePicture.path.split('/').last;
+        formData.files.add(
+          MapEntry(
+            'profile_picture',
+            await MultipartFile.fromFile(
+              profilePicture.path,
+              filename: fileName,
+            ),
+          ),
+        );
+      }
+
+      var response = await dio.post('/profile', data: formData);
+      return Right(response.data['message'] ?? 'Profile berhasil di perbarui');
     } on DioException catch (e) {
       if (e.response != null) {
         return Left(e.response?.data['message'] ?? 'Gagal memperbarui Profile');
