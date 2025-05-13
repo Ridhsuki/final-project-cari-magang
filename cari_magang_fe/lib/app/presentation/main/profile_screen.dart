@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_state.dart';
 import 'package:cari_magang_fe/data/models/profile_model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -22,6 +25,7 @@ class _Content extends StatefulWidget {
 
 class _ContentState extends State<_Content> {
   bool _isDataLoadedToController = false;
+  File? _profileImageToUpdate;
 
   final nameEditController = TextEditingController();
   final placeOfBirthEditController = TextEditingController();
@@ -46,20 +50,26 @@ class _ContentState extends State<_Content> {
       backgroundColor: Colors.white,
       body: BlocListener<ProfileCubit, ProfileState>(
         listener: (context, state) {
+          print("State setelah listener: ${state}");
           if (!state.isLoading) {
             if (state.error.isNotEmpty) {
               showCustomSnackBar(context, state.error, false);
             } else if (state.updateSuccess && state.message.isNotEmpty) {
               showCustomSnackBar(context, state.message, state.updateSuccess);
+              setState(() {
+                _profileImageToUpdate = null;
+              });
             }
           }
         },
-
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             if (state.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(color: Colors.deepOrange),
+              return Material(
+                type: MaterialType.transparency,
+                child: Center(
+                  child: CircularProgressIndicator(color: Colors.deepOrange),
+                ),
               );
             }
 
@@ -92,9 +102,7 @@ class _ContentState extends State<_Content> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 24),
-
-                    // Profile Image
+                    SizedBox(height: 24),
                     CircleAvatar(
                       radius: 60,
                       backgroundImage: NetworkImage(
@@ -285,13 +293,20 @@ class _ContentState extends State<_Content> {
             dateOfBirthController: dateOfBirthEditController,
             addressController: addressEditController,
             educationController: educationEditController,
+            onImageChanged: (File? image) {
+              setState(() {
+                _profileImageToUpdate = image;
+              });
+            },
             onSave: () {
+              print("Gambar yang akan diupdate: $_profileImageToUpdate");
               context.read<ProfileCubit>().updateUser(
                 name: nameEditController.text,
                 placeOfBirth: placeOfBirthEditController.text,
                 dateOfBirth: dateOfBirthEditController.text,
                 address: addressEditController.text,
                 education: educationEditController.text,
+                profilePicture: _profileImageToUpdate,
               );
             },
           ),
@@ -308,6 +323,7 @@ class EditProfileSheet extends StatefulWidget {
   final TextEditingController addressController;
   final TextEditingController educationController;
   final VoidCallback onSave;
+  final Function(File?) onImageChanged;
 
   const EditProfileSheet({
     super.key,
@@ -317,6 +333,7 @@ class EditProfileSheet extends StatefulWidget {
     required this.addressController,
     required this.educationController,
     required this.onSave,
+    required this.onImageChanged,
   });
 
   @override
@@ -324,6 +341,27 @@ class EditProfileSheet extends StatefulWidget {
 }
 
 class _EditProfileSheetState extends State<EditProfileSheet> {
+  File? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    _pickedImage = null;
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        _pickedImage = File(pickedFile.path);
+      });
+      print("Gambar dipilih di EditProfileSheet: $_pickedImage");
+      widget.onImageChanged(_pickedImage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -348,18 +386,69 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    Center(
+                      child: Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 60,
+                            backgroundImage:
+                                _pickedImage != null
+                                    ? FileImage(_pickedImage!) as ImageProvider
+                                    : (context
+                                                .read<ProfileCubit>()
+                                                .state
+                                                .profile
+                                                .data
+                                                ?.profilePicture !=
+                                            null
+                                        ? NetworkImage(
+                                              context
+                                                  .read<ProfileCubit>()
+                                                  .state
+                                                  .profile
+                                                  .data!
+                                                  .profilePicture!,
+                                            )
+                                            as ImageProvider
+                                        : const AssetImage(
+                                          'assets/images/default.png',
+                                        )),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: InkWell(
+                              onTap: () {
+                                _showImagePickerDialog(context);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
                     _buildEditableField('Nama Lengkap', widget.nameController),
-                    // Input Tempat Lahir
                     _buildEditableField(
                       'Tempat Lahir',
                       widget.placeOfBirthController,
-                    ), // Gunakan _buildEditableField biasa
-                    // Input Tanggal Lahir dengan Date Picker
+                    ),
                     _buildEditableDateField(
                       'Tanggal Lahir',
                       widget.dateOfBirthController,
                       context,
-                    ), // Gunakan widget baru
+                    ),
                     _buildEditableField('Alamat', widget.addressController),
                     _buildEditableField(
                       'Pendidikan Terakhir',
@@ -398,6 +487,36 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
     );
   }
 
+  void _showImagePickerDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Galeri'),
+                onTap: () {
+                  _pickImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Kamera'),
+                onTap: () {
+                  _pickImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildEditableField(String label, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -408,6 +527,7 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
           const SizedBox(height: 8),
           TextField(
             controller: controller,
+            readOnly: true,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey.shade200,

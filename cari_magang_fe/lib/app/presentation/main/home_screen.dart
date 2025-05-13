@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const Center(
                 child: Text(
                   'ALDO FERNAN',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, fontFamily: 'Urbanist'),
                 ),
               ),
               SizedBox(height: 16),
