@@ -1,7 +1,11 @@
 import 'package:cari_magang_fe/app/core/components/jobcard.dart';
+import 'package:cari_magang_fe/app/core/components/jobdetail.dart';
 import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/jobdetail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +16,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    context.read<InternshipsCubit>().getInternships();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -21,14 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header - Tidak scrollable
               const Center(
                 child: Text(
                   'ALDO FERNAN',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, fontFamily: 'Urbanist'),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -38,11 +47,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         hintText: 'Search...',
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 2,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black, width: 3),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 3,
+                          ),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -54,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       Image.asset(AssetsConst.filterIcon),
-                      Text('Filter', style: TextStyle(fontSize: 11),),
+                      const Text('Filter', style: TextStyle(fontSize: 11)),
                     ],
                   ),
                 ],
@@ -80,10 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.grey.withValues(alpha: 0.5),
                                 spreadRadius: 0,
                                 blurRadius: 3,
-                                offset: Offset(
-                                  0,
-                                  3,
-                                ), // changes position of shadow
+                                offset: const Offset(0, 3),
                               ),
                             ],
                           ),
@@ -102,70 +114,56 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 12),
 
-                      // Job list
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (_) => JobDetailScreen(
-                                          job: {
-                                            'title': 'UI/UX Designer',
-                                            'salary': 'Rp. 2,000,000 / month',
-                                            'qualification': 'Fresh Graduate',
-                                            'location': 'Semarang',
-                                            'workplace':
-                                                index % 2 == 0
-                                                    ? 'On site'
-                                                    : 'Remote',
-                                            'salaryType':
-                                                index % 2 == 0
-                                                    ? 'Paid'
-                                                    : 'Unpaid',
-                                            'submission': 'Lamar Dengan CV',
-                                            'company': 'PT. Jaya Makmur',
-                                            'recruiter':
-                                                'Rekruter - Bagas\nAktif 2 menit yang lalu',
-                                            'description':
-                                                'Sebagai Desainer UI/UX, Anda akan bertanggung jawab...',
-                                            'duties': [
-                                              'Mengembangkan konsep desain sesuai kebutuhan pengguna.',
-                                              'Membuat wireframes, mockups, dan prototype.',
-                                              'Melakukan riset pengguna dan uji kegunaan.',
-                                              'Berkoordinasi dengan tim dev untuk implementasi.',
-                                              'Menyelesaikan masalah desain UI dan memberikan solusi kreatif.',
-                                              'Menyajikan desain dan menerima feedback.',
-                                            ],
-                                            'requirements': [
-                                              'Mahasiswa aktif atau lulusan baru bidang Desain/Informatika.',
-                                              'Paham dasar desain UI/UX.',
-                                              'Mahir pakai Adobe XD, Figma, atau Sketch.',
-                                              'Mampu bekerja individu/tim.',
-                                              'Pengetahuan HTML/CSS nilai tambah.',
-                                              'Terbuka dengan feedback dan revisi.',
-                                            ],
-                                          },
-                                        ),
-                                  ),
-                                );
-                              },
-                              child: JobCard(
-                                title: 'UI/UX Designer',
-                                company: 'PT. Jaya Makmur',
-                                location: 'Semarang',
-                                workplace:
-                                    index % 2 == 0 ? 'On site' : 'Remote',
-                                salaryType: index % 2 == 0 ? 'Paid' : 'Unpaid',
-                              ),
-                            ),
+                      BlocBuilder<InternshipsCubit, InternshipsState>(
+                        builder: (context, state) {
+                          if (state.isLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (state.error != '') {
+                            return Center(child: Text('Error: ${state.error}'));
+                          }
+                          if (state.internshipsData.isEmpty) {
+                            return const Center(
+                              child: Text('No internships available.'),
+                            );
+                          }
+
+                          return ListView.builder(
+                            itemCount: state.internshipsData.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final item = state.internshipsData[index];
+                              return JobCard(
+                                title: item.title ?? 'No Title',
+                                company: item.user?.name ?? 'Perusahaan',
+                                location: item.location ?? '-',
+                                workplace: item.system ?? '-',
+                                salaryType:
+                                    item.status == 'Paid' ? 'Paid' : 'Unpaid',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => JobDetailWidget(
+                                            title: item.title ?? '-',
+                                            category:
+                                                item.category?.name ?? '-',
+                                            location: item.location ?? '-',
+                                            system: item.system ?? '-',
+                                            status: item.status ?? '-',
+                                            name: item.user?.name ?? '-',
+                                            description:
+                                                item.description ?? '-',
+                                          ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           );
                         },
                       ),

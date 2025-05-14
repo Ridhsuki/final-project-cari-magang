@@ -7,6 +7,7 @@ class JobCard extends StatelessWidget {
   final String location;
   final String workplace;
   final String salaryType;
+  final VoidCallback? onTap;
 
   const JobCard({
     super.key,
@@ -15,6 +16,7 @@ class JobCard extends StatelessWidget {
     required this.location,
     required this.workplace,
     required this.salaryType,
+    this.onTap,
   });
 
   @override
@@ -26,6 +28,7 @@ class JobCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: GestureDetector(
+          onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

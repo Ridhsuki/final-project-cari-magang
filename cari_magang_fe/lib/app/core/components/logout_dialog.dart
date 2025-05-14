@@ -1,4 +1,4 @@
-import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
+import 'package:cari_magang_fe/data/datasource/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 
 class LogoutDialog extends StatelessWidget {
@@ -51,7 +51,7 @@ class LogoutDialog extends StatelessWidget {
                     '/login',
                     (route) => false,
                   );
-                  if (onConfirm != null) onConfirm!();
+                  onConfirm!();
                 },
                 child: const Text('Iya', style: TextStyle(color: Colors.white)),
               ),

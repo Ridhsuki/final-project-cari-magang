@@ -1,4 +1,4 @@
-import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
+import 'package:cari_magang_fe/data/datasource/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
