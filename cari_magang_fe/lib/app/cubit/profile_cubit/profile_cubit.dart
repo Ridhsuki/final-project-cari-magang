@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_state.dart';
 import 'package:cari_magang_fe/data/datasource/services/profile_service.dart';
@@ -24,6 +26,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     required String dateOfBirth,
     required String address,
     required String education,
+    File? profilePicture
   }) async {
     emit(state.copyWith(isLoading: true));
 
@@ -33,6 +36,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       dateOfBirth: dateOfBirth,
       address: address,
       education: education,
+      profilePicture: profilePicture
     );
 
     if (updateResult.isLeft) {
