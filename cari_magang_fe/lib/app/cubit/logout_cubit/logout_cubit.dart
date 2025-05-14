@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cari_magang_fe/app/cubit/logout_cubit/logout_state.dart';
 import 'package:cari_magang_fe/data/datasource/services/auth_service.dart';
-import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
+import 'package:cari_magang_fe/data/datasource/local_storage/local_storage.dart';
 
 class LogoutCubit extends Cubit<LogoutState> {
   LogoutCubit() : super(LogoutState());

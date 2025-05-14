@@ -1,5 +1,5 @@
-import 'package:cari_magang_fe/app/cubit/logout_cubit/logout_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/logout_cubit/logout_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/regist_cubit/regist_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/login_cubit/login_cubit.dart';
@@ -17,6 +17,9 @@ import 'package:cari_magang_fe/app/core/appcolors.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/cubit/logout_cubit/logout_cubit.dart';
-import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
+import 'package:cari_magang_fe/data/datasource/local_storage/local_storage.dart';
 
 class LogoutDialog extends StatelessWidget {
   final VoidCallback onConfirm;
@@ -38,11 +38,7 @@ class LogoutDialog extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.logout,
-                size: 48,
-                color: Appcolors.primaryColor,
-              ),
+              const Icon(Icons.logout, size: 48, color: Appcolors.primaryColor),
               const SizedBox(height: 16),
               const Text(
                 'Keluar dari akun?',
