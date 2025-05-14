@@ -1,4 +1,4 @@
-import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
+import 'package:cari_magang_fe/data/datasource/local_storage/local_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:cari_magang_fe/data/models/profile_model/profile_model.dart';
