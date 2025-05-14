@@ -25,7 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
               const Center(
                 child: Text(
                   'ALDO FERNAN',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, fontFamily: 'Urbanist'),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                    fontFamily: 'Urbanist',
+                  ),
                 ),
               ),
               SizedBox(height: 16),
@@ -54,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       Image.asset(AssetsConst.filterIcon),
-                      Text('Filter', style: TextStyle(fontSize: 11),),
+                      Text('Filter', style: TextStyle(fontSize: 11)),
                     ],
                   ),
                 ],

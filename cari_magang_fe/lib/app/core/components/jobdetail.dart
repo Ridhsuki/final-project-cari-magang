@@ -61,7 +61,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Appcolors.primaryColor
+                        color: Appcolors.primaryColor,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -148,9 +148,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(22),
                             ),
-                            padding:
-                                EdgeInsets
-                                    .zero,
+                            padding: EdgeInsets.zero,
                           ),
                           child: const Text(
                             'Apply now',

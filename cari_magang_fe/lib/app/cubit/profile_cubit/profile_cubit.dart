@@ -26,7 +26,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     required String dateOfBirth,
     required String address,
     required String education,
-    File? profilePicture
+    File? profilePicture,
   }) async {
     emit(state.copyWith(isLoading: true));
 
@@ -36,7 +36,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       dateOfBirth: dateOfBirth,
       address: address,
       education: education,
-      profilePicture: profilePicture
+      profilePicture: profilePicture,
     );
 
     if (updateResult.isLeft) {
@@ -70,5 +70,9 @@ class ProfileCubit extends Cubit<ProfileState> {
         ),
       ),
     );
+  }
+
+  void resetProfile() {
+    emit(ProfileState());
   }
 }
