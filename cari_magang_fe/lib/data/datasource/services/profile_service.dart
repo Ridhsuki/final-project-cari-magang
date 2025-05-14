@@ -1,5 +1,5 @@
+import 'package:cari_magang_fe/data/datasource/local_storage/local_storage.dart';
 import 'dart:io';
-
 import 'package:cari_magang_fe/data/local_storage/local_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';

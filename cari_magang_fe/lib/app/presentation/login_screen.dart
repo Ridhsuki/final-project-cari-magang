@@ -18,6 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool rememberMe = false;
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   void handleLogin() {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
