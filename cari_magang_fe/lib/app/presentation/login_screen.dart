@@ -1,4 +1,5 @@
 import 'package:cari_magang_fe/app/cubit/login_cubit/login_state.dart';
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/core/appcolors.dart';
@@ -61,6 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           );
+          context.read<ProfileCubit>().getUser();
+          if (!mounted) return;
           Navigator.pushReplacementNamed(context, '/main');
           context.read<LoginCubit>().resetState();
         }

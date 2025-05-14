@@ -527,7 +527,6 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
           const SizedBox(height: 8),
           TextField(
             controller: controller,
-            readOnly: true,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey.shade200,

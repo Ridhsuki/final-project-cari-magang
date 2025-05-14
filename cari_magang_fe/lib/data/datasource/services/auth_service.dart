@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/data/models/logout_response.dart';
 import 'package:cari_magang_fe/data/models/regist_response.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
@@ -47,6 +48,28 @@ class AuthService {
       );
       var registResponse = RegistResponse.fromMap(response.data);
       return Right(registResponse);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        var errorResponse = e.response?.data['message'];
+        return Left('Error : $errorResponse');
+      } else if (e.response?.statusCode == 401) {
+        var errorResponse = e.response?.data['message'];
+        return Left('Error : $errorResponse');
+      } else {
+        return Left('Undhandle Error : ${e.message}');
+      }
+    }
+  }
+
+  Future<Either<String, LogoutResponse>> logout(String token) async {
+    try {
+      var response = await dio.post(
+        '/logout',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      var logoutResponse = LogoutResponse.fromMap(response.data);
+      return Right(logoutResponse);
     } on DioException catch (e) {
       if (e.response?.statusCode == 404) {
         var errorResponse = e.response?.data['message'];

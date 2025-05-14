@@ -1,7 +1,6 @@
 import 'package:cari_magang_fe/app/core/components/jobcard.dart';
 import 'package:cari_magang_fe/app/core/components/jobdetail.dart';
 import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
-import 'package:cari_magang_fe/app/presentation/main/insiders/jobdetail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
@@ -34,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const Center(
                 child: Text(
                   'ALDO FERNAN',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, fontFamily: 'Urbanist'),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
               const SizedBox(height: 16),
