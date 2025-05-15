@@ -116,8 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocBuilder<InternshipsCubit, InternshipsState>(
                         builder: (context, state) {
                           if (state.isLoading) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.deepOrange,
+                              ),
                             );
                           }
                           if (state.error != '') {

@@ -1,6 +1,7 @@
 import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/applyjob_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class JobDetailWidget extends StatefulWidget {
   final String title;
@@ -107,7 +108,9 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       //   ),
                       // ),
                       const SizedBox(height: 8),
-                      Text(widget.description),
+                      Html(
+                        data: widget.description,
+                      ),
                       const SizedBox(height: 8),
                       // BulletList(items: widget.duties),
                       const SizedBox(height: 24),

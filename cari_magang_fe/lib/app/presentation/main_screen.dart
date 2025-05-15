@@ -47,31 +47,26 @@ class _MainScreenState extends State<MainScreen> {
         ),
         items: [
           BottomNavigationBarItem(
-            // icon: Icon(Icons.notifications_none_rounded),
             activeIcon: Image.asset(AssetsConst.notifIconActive),
             icon: Image.asset(AssetsConst.notifIcon),
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            // icon: Icon(Icons.bookmark_border),
             activeIcon: Image.asset(AssetsConst.saveIconActive),
             icon: Image.asset(AssetsConst.saveIcon),
             label: 'Saved',
           ),
           BottomNavigationBarItem(
-            // icon: Icon(Icons.home_outlined),
             activeIcon: Image.asset(AssetsConst.houseIconActive),
             icon: Image.asset(AssetsConst.houseIcon),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            // icon: Icon(Icons.settings_outlined),
             activeIcon: Image.asset(AssetsConst.settingIconActive),
             icon: Image.asset(AssetsConst.settingIcon),
             label: 'Settings',
           ),
           BottomNavigationBarItem(
-            // icon: Icon(Icons.person_outline_rounded),
             activeIcon: Image.asset(AssetsConst.userIconActive),
             icon: Image.asset(AssetsConst.userIcon),
             label: 'Profile',
