@@ -1,4 +1,5 @@
 import 'package:cari_magang_fe/app/core/appcolors.dart';
+import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/applyjob_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -61,18 +62,22 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       Text(
                         widget.category,
                         style: const TextStyle(
-                          color: Colors.orange,
+                          color: Appcolors.thirdColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.school, size: 16),
-                          const SizedBox(width: 4),
+                          // const Icon(Icons.school, size: 16),
+                          // const SizedBox(width: 4),
                           // Text(widget.qualification),
-                          const SizedBox(width: 12),
-                          const Icon(Icons.location_on, size: 16),
+                          // const SizedBox(width: 12),
+                          const Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: Appcolors.fourthColor,
+                          ),
                           const SizedBox(width: 4),
                           Text(widget.location),
                         ],
@@ -80,11 +85,23 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          const Icon(Icons.access_time, size: 16),
+                          const Icon(
+                            Icons.access_time,
+                            size: 16,
+                            color: Appcolors.fourthColor,
+                          ),
                           const SizedBox(width: 4),
                           Text(widget.system),
-                          const SizedBox(width: 12),
-                          const Icon(Icons.file_copy, size: 16),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.monetization_on,
+                            size: 16,
+                            color: Appcolors.fourthColor,
+                          ),
                           const SizedBox(width: 4),
                           Text(widget.status),
                         ],
@@ -137,7 +154,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
+                              backgroundColor: Appcolors.fourthColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(22),
                               ),
@@ -165,7 +182,10 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
             child: CircleAvatar(
               backgroundColor: Colors.black.withAlpha((0.2 * 255).toInt()),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Appcolors.fourthColor,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -182,7 +202,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
               child: IconButton(
                 icon: Icon(
                   isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                  color: Colors.white,
+                  color: Appcolors.fourthColor,
                 ),
                 onPressed: () {
                   setState(() {
