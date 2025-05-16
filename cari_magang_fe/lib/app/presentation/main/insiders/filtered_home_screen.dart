@@ -14,6 +14,7 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
 
   String? selectedLocation;
   String? selectedStatus;
+  String? selectedSystem;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
         HomeScreen(
           locationFilter: selectedLocation,
           statusFilter: selectedStatus,
+          systemFilter: selectedSystem,
         ),
 
         // Filter Overlay
@@ -84,6 +86,27 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
                           }).toList(),
                     ),
                     const SizedBox(height: 16),
+                    const Text(
+                      "System",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      children:
+                          ['on-site', 'remote', 'hybrid'].map((system) {
+                            return FilterChip(
+                              label: Text(system),
+                              selected: selectedSystem == system,
+                              onSelected: (val) {
+                                setState(() {
+                                  selectedSystem = val ? system : null;
+                                });
+                              },
+                            );
+                          }).toList(),
+                    ),
+                    const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -92,6 +115,7 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
                             setState(() {
                               selectedLocation = null;
                               selectedStatus = null;
+                              selectedSystem = null;
                               isFilterVisible = false;
                             });
                           },
