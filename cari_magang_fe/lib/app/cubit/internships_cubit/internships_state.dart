@@ -1,5 +1,4 @@
 import 'package:cari_magang_fe/data/models/internships_model/datum.dart';
-import 'package:cari_magang_fe/data/models/internships_model/internships_model.dart';
 import 'package:equatable/equatable.dart';
 
 class InternshipsState extends Equatable {

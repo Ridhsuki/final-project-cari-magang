@@ -322,18 +322,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               final item = filteredInternships[index];
-                              return JobCard(
-                                title: item.title ?? 'No Title',
-                                company: item.user?.name ?? 'Perusahaan',
-                                location: item.location ?? '-',
-                                workplace: item.system ?? '-',
-                                salaryType: item.status!,
+                              return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder:
                                           (context) => JobDetailWidget(
+                                            internshipId: item.id ?? 0,
                                             title: item.title ?? '-',
                                             category:
                                                 item.category?.name ?? '-',
@@ -347,6 +343,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   );
                                 },
+                                child: JobCard(
+                                  title: item.title ?? 'No Title',
+                                  company: item.user?.name ?? 'Perusahaan',
+                                  location: item.location ?? '-',
+                                  workplace: item.system ?? '-',
+                                  salaryType: item.status!,
+                                ),
                               );
                             },
                           );

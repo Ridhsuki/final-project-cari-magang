@@ -14,6 +14,7 @@ class JobDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return JobDetailWidget(
+      internshipId: internships.id ?? 0,
       title: internships.title ?? 'No title',
       category: internships.category?.name ?? 'Tidak disebutkan',
       location: internships.location ?? 'Tidak disebutkan',
