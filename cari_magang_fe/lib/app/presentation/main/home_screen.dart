@@ -9,8 +9,14 @@ import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_state.dar
 class HomeScreen extends StatefulWidget {
   final String? locationFilter;
   final String? statusFilter;
+  final String? systemFilter;
 
-  const HomeScreen({super.key, this.locationFilter, this.statusFilter});
+  const HomeScreen({
+    super.key,
+    this.locationFilter,
+    this.statusFilter,
+    this.systemFilter,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late String? selectedLocation;
   late String? selectedStatus;
+  late String? selectedSystem;
 
   @override
   void initState() {
@@ -27,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     selectedLocation = widget.locationFilter;
     selectedStatus = widget.statusFilter;
+    selectedSystem = widget.systemFilter;
   }
 
   void openFilterModel() async {
@@ -35,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         String? thisLocation = selectedLocation;
         String? thisStatus = selectedStatus;
+        String? thisSystem = selectedSystem;
 
         return StatefulBuilder(
           builder:
@@ -56,10 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Place filter dropdown
                     DropdownButton<String>(
                       value: thisLocation,
-                      hint: const Text('Select Place'),
+                      hint: const Text('Select Location'),
                       isExpanded: true,
                       items:
-                          <String>['Bekasi', 'Bandung', 'Surabaya', 'Semua']
+                          <String>[
+                                'Bekasi',
+                                'Bandung',
+                                'Tangerang',
+                                'Solo',
+                                'Semua',
+                              ]
                               .map(
                                 (e) => DropdownMenuItem(
                                   value: e == 'Semua' ? null : e,
@@ -75,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Salary filter dropdown
                     DropdownButton<String>(
                       value: thisStatus,
-                      hint: const Text('Select Salary'),
+                      hint: const Text('Select Status'),
                       isExpanded: true,
                       items:
                           <String>['paid', 'unpaid', 'Semua']
@@ -91,6 +106,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
 
+                    // System filter dropdown
+                    DropdownButton<String>(
+                      value: thisSystem,
+                      hint: const Text('Select System'),
+                      isExpanded: true,
+                      items:
+                          <String>['on-site', 'remote', 'hybrid', 'Semua']
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  value: e == 'Semua' ? null : e,
+                                  child: Text(e),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (val) {
+                        setModalState(() => thisSystem = val);
+                      },
+                    ),
+
                     const Spacer(),
 
                     ElevatedButton(
@@ -98,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.pop(context, {
                           'location': thisLocation,
                           'status': thisStatus,
+                          'system': thisSystem,
                         });
                       },
                       child: const Text('Apply Filter'),
@@ -113,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         selectedLocation = result['location'];
         selectedStatus = result['status'];
+        selectedSystem = result['system'];
       });
     }
   }
@@ -228,20 +264,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           final filteredInternships =
                               state.internshipsData.where((item) {
-                                final matchesPlace =
+                                final matchesLocation =
                                     selectedLocation == null ||
                                     (item.location?.toLowerCase().contains(
                                           selectedLocation!.toLowerCase(),
                                         ) ??
                                         false);
-                                final matchesSalary =
+                                final matchesStatus =
                                     selectedStatus == null ||
                                     (selectedStatus == 'paid' &&
                                         item.status == 'paid') ||
                                     (selectedStatus == 'unpaid' &&
                                         item.status == 'unpaid');
+                                final matchesSystem =
+                                    selectedSystem == null ||
+                                    (selectedSystem == 'on-site' &&
+                                        item.system == 'on-site') ||
+                                    (selectedSystem == 'remote' &&
+                                        item.system == 'remote') ||
+                                    (selectedSystem == 'hybrid' &&
+                                        item.system == 'hybrid');
 
-                                return matchesPlace && matchesSalary;
+                                return matchesLocation &&
+                                    matchesStatus &&
+                                    matchesSystem;
                               }).toList();
 
                           if (filteredInternships.isEmpty) {
