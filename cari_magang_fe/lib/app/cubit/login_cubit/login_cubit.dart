@@ -11,7 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     var data = await AuthService().login(email, password);
 
-    data.fold(  
+    data.fold(
       (left) {
         emit(state.copyWith(error: left));
       },
