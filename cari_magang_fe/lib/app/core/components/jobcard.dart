@@ -57,20 +57,20 @@ class JobCard extends StatelessWidget {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    decoration: BoxDecoration(
-                      color:
-                          salaryType == 'Paid'
-                              ? Colors.green[100]
-                              : Colors.grey[300],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    // decoration: BoxDecoration(
+                    //   color:
+                    //       salaryType == 'Paid'
+                    //           ? Colors.green[500]
+                    //           : Colors.black,
+                    //   borderRadius: BorderRadius.circular(8),
+                    // ),
                     child: Text(
                       salaryType,
                       style: TextStyle(
                         color:
-                            salaryType == 'Paid'
-                                ? Colors.green[800]
-                                : Colors.grey[800],
+                            salaryType == 'paid'
+                                ? Colors.green[500]
+                                : Colors.yellow[700],
                         fontWeight: FontWeight.w500,
                       ),
                     ),

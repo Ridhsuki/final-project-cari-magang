@@ -7,17 +7,114 @@ import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dar
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_state.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String? locationFilter;
+  final String? statusFilter;
+
+  const HomeScreen({super.key, this.locationFilter, this.statusFilter});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late String? selectedLocation;
+  late String? selectedStatus;
+
   @override
   void initState() {
     super.initState();
     context.read<InternshipsCubit>().getInternships();
+
+    selectedLocation = widget.locationFilter;
+    selectedStatus = widget.statusFilter;
+  }
+
+  void openFilterModel() async {
+    final result = await showModalBottomSheet<Map<String, String?>>(
+      context: context,
+      builder: (context) {
+        String? thisLocation = selectedLocation;
+        String? thisStatus = selectedStatus;
+
+        return StatefulBuilder(
+          builder:
+              (context, setModalState) => Container(
+                padding: const EdgeInsets.all(16),
+                height: 300,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Filter',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Place filter dropdown
+                    DropdownButton<String>(
+                      value: thisLocation,
+                      hint: const Text('Select Place'),
+                      isExpanded: true,
+                      items:
+                          <String>['Bekasi', 'Bandung', 'Surabaya', 'Semua']
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  value: e == 'Semua' ? null : e,
+                                  child: Text(e),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (val) {
+                        setModalState(() => thisLocation = val);
+                      },
+                    ),
+
+                    // Salary filter dropdown
+                    DropdownButton<String>(
+                      value: thisStatus,
+                      hint: const Text('Select Salary'),
+                      isExpanded: true,
+                      items:
+                          <String>['paid', 'unpaid', 'Semua']
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  value: e == 'Semua' ? null : e,
+                                  child: Text(e),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (val) {
+                        setModalState(() => thisStatus = val);
+                      },
+                    ),
+
+                    const Spacer(),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context, {
+                          'location': thisLocation,
+                          'status': thisStatus,
+                        });
+                      },
+                      child: const Text('Apply Filter'),
+                    ),
+                  ],
+                ),
+              ),
+        );
+      },
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedLocation = result['location'];
+        selectedStatus = result['status'];
+      });
+    }
   }
 
   @override
@@ -65,11 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Column(
-                    children: [
-                      Image.asset(AssetsConst.filterIcon),
-                      const Text('Filter', style: TextStyle(fontSize: 11)),
-                    ],
+                  GestureDetector(
+                    onTap: openFilterModel,
+                    child: Column(
+                      children: [
+                        Image.asset(AssetsConst.filterIcon),
+                        const Text('Filter', style: TextStyle(fontSize: 11)),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -120,28 +220,66 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: CircularProgressIndicator(),
                             );
                           }
-                          if (state.error != '') {
+                          if (state.error.isNotEmpty) {
                             return Center(child: Text('Error: ${state.error}'));
                           }
-                          if (state.internshipsData.isEmpty) {
+
+                          final filteredInternships =
+                              state.internshipsData.where((item) {
+                                final matchesPlace =
+                                    selectedLocation == null ||
+                                    (item.location?.toLowerCase().contains(
+                                          selectedLocation!.toLowerCase(),
+                                        ) ??
+                                        false);
+                                final matchesSalary =
+                                    selectedStatus == null ||
+                                    (selectedStatus == 'paid' &&
+                                        item.status == 'paid') ||
+                                    (selectedStatus == 'unpaid' &&
+                                        item.status == 'unpaid');
+
+                                return matchesPlace && matchesSalary;
+                              }).toList();
+
+                          if (filteredInternships.isEmpty) {
                             return const Center(
-                              child: Text('No internships available.'),
+                              child: Text('No internships found.'),
                             );
                           }
 
+                          // BlocBuilder<InternshipsCubit, InternshipsState>(
+                          //   builder: (context, state) {
+                          //     if (state.isLoading) {
+                          //       return Center(
+                          //         child: CircularProgressIndicator(
+                          //           color: Colors.deepOrange,
+                          //         ),
+                          //       );
+                          //     }
+                          //     if (state.error != '') {
+                          //       return Center(
+                          //         child: Text('Error: ${state.error}'),
+                          //       );
+                          //     }
+                          //     if (state.internshipsData.isEmpty) {
+                          //       return const Center(
+                          //         child: Text('No internships available.'),
+                          //       );
+                          //     }
+
                           return ListView.builder(
-                            itemCount: state.internshipsData.length,
+                            itemCount: filteredInternships.length,
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              final item = state.internshipsData[index];
+                              final item = filteredInternships[index];
                               return JobCard(
                                 title: item.title ?? 'No Title',
                                 company: item.user?.name ?? 'Perusahaan',
                                 location: item.location ?? '-',
                                 workplace: item.system ?? '-',
-                                salaryType:
-                                    item.status == 'Paid' ? 'Paid' : 'Unpaid',
+                                salaryType: item.status!,
                                 onTap: () {
                                   Navigator.push(
                                     context,
