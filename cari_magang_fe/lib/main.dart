@@ -1,5 +1,6 @@
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/logout_cubit/logout_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/notif_cubit/notif_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/regist_cubit/regist_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/login_cubit/login_cubit.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LogoutCubit()),
         BlocProvider(create: (_) => ProfileCubit()..getUser()),
         BlocProvider(create: (_) => InternshipsCubit()..getInternships()),
+        BlocProvider(create: (_) => NotifCubit()..getNotifications()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

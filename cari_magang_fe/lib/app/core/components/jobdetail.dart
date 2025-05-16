@@ -108,9 +108,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       //   ),
                       // ),
                       const SizedBox(height: 8),
-                      Html(
-                        data: widget.description,
-                      ),
+                      Html(data: widget.description),
                       const SizedBox(height: 8),
                       // BulletList(items: widget.duties),
                       const SizedBox(height: 24),
