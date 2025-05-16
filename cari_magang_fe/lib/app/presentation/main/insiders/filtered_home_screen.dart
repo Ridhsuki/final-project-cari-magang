@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:flutter/material.dart';
 import 'package:cari_magang_fe/app/presentation/main/home_screen.dart';
 
@@ -11,11 +12,17 @@ class FilteredHomeScreen extends StatefulWidget {
 class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
   bool isFilterVisible = false;
 
+  String? selectedLocation;
+  String? selectedStatus;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const HomeScreen(),
+        HomeScreen(
+          locationFilter: selectedLocation,
+          statusFilter: selectedStatus,
+        ),
 
         // Filter Overlay
         if (isFilterVisible)
@@ -36,37 +43,69 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Place",
+                      "Location",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
                       children:
-                          ['onsite', 'online', 'hybrid'].map((place) {
+                          ['Bekasi', 'Bandung', 'Tangerang'].map((location) {
                             return FilterChip(
-                              label: Text(place),
-                              selected: false,
-                              onSelected: (val) {},
+                              label: Text(location),
+                              selected: selectedLocation == location,
+                              onSelected: (val) {
+                                setState(() {
+                                  selectedLocation = val ? location : null;
+                                });
+                              },
                             );
                           }).toList(),
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      "Salary",
+                      "Status",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
                       children:
-                          ['paid', 'unpaid'].map((salary) {
+                          ['paid', 'unpaid'].map((status) {
                             return FilterChip(
-                              label: Text(salary),
-                              selected: false,
-                              onSelected: (val) {},
+                              label: Text(status),
+                              selected: selectedStatus == status,
+                              onSelected: (val) {
+                                setState(() {
+                                  selectedStatus = val ? status : null;
+                                });
+                              },
                             );
                           }).toList(),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              selectedLocation = null;
+                              selectedStatus = null;
+                              isFilterVisible = false;
+                            });
+                          },
+                          child: const Text('Reset'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isFilterVisible = false;
+                            });
+                          },
+                          child: const Text('Apply'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -74,7 +113,7 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
             ),
           ),
 
-        // Filter button (overlayed)
+        // Filter button
         Positioned(
           top: 72,
           right: 34,
@@ -86,7 +125,7 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
             },
             child: Column(
               children: [
-                Image.asset('assets/images/funnel.png', height: 24),
+                Image.asset(AssetsConst.filterIcon, height: 24),
                 const Text('Filter', style: TextStyle(fontSize: 11)),
               ],
             ),
