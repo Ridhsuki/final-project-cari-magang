@@ -1,5 +1,4 @@
 import 'package:cari_magang_fe/app/core/appcolors.dart';
-import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/applyjob_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -69,10 +68,6 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          // const Icon(Icons.school, size: 16),
-                          // const SizedBox(width: 4),
-                          // Text(widget.qualification),
-                          // const SizedBox(width: 12),
                           const Icon(
                             Icons.location_on,
                             size: 16,
@@ -106,40 +101,10 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                           Text(widget.status),
                         ],
                       ),
-                      const Divider(height: 32),
-                      // Text(
-                      //   widget.company,
-                      //   style: const TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 16,
-                      //   ),
-                      // ),
-                      // Text(widget.recruiter),
-                      // const SizedBox(height: 24),
-                      // const Text(
-                      //   'Deskripsi Pekerjaan',
-                      //   style: TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 16,
-                      //     color: Colors.orange,
-                      //   ),
-                      // ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 16),
+                      const Divider(height: 12),
                       Html(data: widget.description),
                       const SizedBox(height: 8),
-                      // BulletList(items: widget.duties),
-                      const SizedBox(height: 24),
-                      // const Text(
-                      //   'Persyaratan',
-                      //   style: TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 16,
-                      //     color: Colors.orange,
-                      //   ),
-                      // ),
-                      const SizedBox(height: 8),
-                      // BulletList(items: widget.requirements),
-                      const SizedBox(height: 24),
                       Center(
                         child: SizedBox(
                           width: 180,
@@ -149,7 +114,10 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ApplyjobScreen(),
+                                  builder:
+                                      (context) => const ApplyjobScreen(
+                                        internshipId: '',
+                                      ),
                                 ),
                               );
                             },

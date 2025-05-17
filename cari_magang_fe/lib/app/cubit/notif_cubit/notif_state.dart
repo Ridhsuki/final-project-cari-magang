@@ -17,7 +17,7 @@ class NotifState extends Equatable {
 
   @override
   List<Object> get props => [notifData, deleteNotif, isLoading, error];
-  
+
   NotifState copyWith({
     List<Datum>? notifData,
     DeleteNotifModel? deleteNotif,
