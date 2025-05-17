@@ -1,10 +1,13 @@
 import 'package:cari_magang_fe/app/core/appcolors.dart';
-import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
+import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_state.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/applyjob_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class JobDetailWidget extends StatefulWidget {
+  final int internshipId;
   final String title;
   final String category;
   final String location;
@@ -15,6 +18,7 @@ class JobDetailWidget extends StatefulWidget {
 
   const JobDetailWidget({
     super.key,
+    required this.internshipId,
     required this.title,
     required this.category,
     required this.location,
@@ -69,10 +73,6 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          // const Icon(Icons.school, size: 16),
-                          // const SizedBox(width: 4),
-                          // Text(widget.qualification),
-                          // const SizedBox(width: 12),
                           const Icon(
                             Icons.location_on,
                             size: 16,
@@ -107,36 +107,10 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                         ],
                       ),
                       const Divider(height: 32),
-                      // Text(
-                      //   widget.company,
-                      //   style: const TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 16,
-                      //   ),
-                      // ),
-                      // Text(widget.recruiter),
-                      // const SizedBox(height: 24),
-                      // const Text(
-                      //   'Deskripsi Pekerjaan',
-                      //   style: TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 16,
-                      //     color: Colors.orange,
-                      //   ),
-                      // ),
                       const SizedBox(height: 8),
                       Html(data: widget.description),
                       const SizedBox(height: 8),
-                      // BulletList(items: widget.duties),
                       const SizedBox(height: 24),
-                      // const Text(
-                      //   'Persyaratan',
-                      //   style: TextStyle(
-                      //     fontWeight: FontWeight.bold,
-                      //     fontSize: 16,
-                      //     color: Colors.orange,
-                      //   ),
-                      // ),
                       const SizedBox(height: 8),
                       // BulletList(items: widget.requirements),
                       const SizedBox(height: 24),
@@ -194,30 +168,45 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
           ),
 
           // Tombol bookmark di kanan atas
-          Positioned(
-            top: 40,
-            right: 16,
-            child: CircleAvatar(
-              backgroundColor: Colors.black.withAlpha((0.2 * 255).toInt()),
-              child: IconButton(
-                icon: Icon(
-                  isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                  color: Appcolors.fourthColor,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isBookmarked = !isBookmarked;
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        isBookmarked ? 'Saved!' : 'Removed from saved',
-                      ),
+          BlocBuilder<SavedCubit, SavedState>(
+            builder: (context, state) {
+              final cubit = context.read<SavedCubit>();
+              final isBookmarked = cubit.isSaved(widget.internshipId);
+              return Positioned(
+                top: 40,
+                right: 16,
+                child: CircleAvatar(
+                  backgroundColor: Colors.black.withAlpha((0.2 * 255).toInt()),
+                  child: IconButton(
+                    icon: Icon(
+                      isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      color: Appcolors.fourthColor,
                     ),
-                  );
-                },
-              ),
-            ),
+                    onPressed: () async {
+                      await context.read<SavedCubit>().toggleSaved(
+                        widget.internshipId,
+                      );
+                      final isCurrentlyBookmarked = context
+                          .read<SavedCubit>()
+                          .isSaved(widget.internshipId);
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          content: Text(
+                            isCurrentlyBookmarked ? 'Removed from saved' : 'Saved!',
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                        ),
+                      );
+                      }
+                    },
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
