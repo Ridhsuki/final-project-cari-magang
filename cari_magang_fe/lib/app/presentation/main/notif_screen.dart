@@ -29,8 +29,8 @@ class _NotifScreenState extends State<NotifScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<NotifCubit, NotifState>(
-      listenWhen: (previous, current) =>
-          previous.deleteNotif != current.deleteNotif,
+      listenWhen:
+          (previous, current) => previous.deleteNotif != current.deleteNotif,
       listener: (context, state) {
         if (state.deleteNotif.message != null) {
           // Show snackbar upon successful deletion
@@ -105,7 +105,9 @@ class _NotifScreenState extends State<NotifScreen> {
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
                 final notif = state.notifData[index];
-                final imageUrl = buildProfilePictureUrl(notif.sender?.profilePicture);
+                final imageUrl = buildProfilePictureUrl(
+                  notif.sender?.profilePicture,
+                );
 
                 return SizedBox(
                   height: 60,
@@ -117,7 +119,9 @@ class _NotifScreenState extends State<NotifScreen> {
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
-                          color: Appcolors.primaryColor.withAlpha((0.4 * 255).toInt()),
+                          color: Appcolors.primaryColor.withAlpha(
+                            (0.4 * 255).toInt(),
+                          ),
                           blurRadius: 1,
                           offset: const Offset(0, 1),
                         ),
@@ -147,7 +151,10 @@ class _NotifScreenState extends State<NotifScreen> {
                         Expanded(
                           child: Text(
                             "${notif.sender?.name}, ${notif.message.toString()}",
-                            style: TextStyle(fontSize: 12, color: Colors.black87),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black87,
+                            ),
                             softWrap: true,
                           ),
                         ),
@@ -158,17 +165,20 @@ class _NotifScreenState extends State<NotifScreen> {
                             if (value == 'delete') {
                               final id = notif.id;
                               if (id != null) {
-                                await context.read<NotifCubit>().deleteNotification(id);
+                                await context
+                                    .read<NotifCubit>()
+                                    .deleteNotification(id);
                               }
                             }
                           },
-                          itemBuilder: (context) => [
-                            const PopupMenuItem(
-                              height: 20,
-                              value: 'delete',
-                              child: Text('Delete'),
-                            ),
-                          ],
+                          itemBuilder:
+                              (context) => [
+                                const PopupMenuItem(
+                                  height: 20,
+                                  value: 'delete',
+                                  child: Text('Delete'),
+                                ),
+                              ],
                           icon: const Icon(Icons.more_vert),
                         ),
                       ],
