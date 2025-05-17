@@ -8,6 +8,7 @@ import 'package:cari_magang_fe/app/cubit/notif_cubit/notif_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/regist_cubit/regist_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/login_cubit/login_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_cubit.dart';
 import 'package:cari_magang_fe/app/presentation/getstarted_screen.dart';
 import 'package:cari_magang_fe/app/presentation/login_screen.dart';
 import 'package:cari_magang_fe/app/presentation/main_screen.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
                     education: '',
                   ),
         ),
+        BlocProvider(create: (_) => SavedCubit()..getSavedData())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

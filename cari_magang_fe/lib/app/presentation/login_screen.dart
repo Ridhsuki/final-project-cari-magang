@@ -212,25 +212,49 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         const SizedBox(height: 88),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: handleLogin,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffF66527),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
+                        BlocBuilder<LoginCubit, LoginState>(
+                          builder: (context, state) {
+                            if (state.isLoading) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 56,
+                                child: ElevatedButton(
+                                  onPressed: handleLogin,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xffF66527),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: Appcolors.secondaryColor,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            return SizedBox(
+                              width: double.infinity,
+                              height: 56,
+                              child: ElevatedButton(
+                                onPressed: handleLogin,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xffF66527),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Continue',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: const Text(
-                              'Continue',
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Color(0xffffffff),
-                              ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 5),
                         Row(

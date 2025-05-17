@@ -1,29 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_state.dart';
 import 'package:cari_magang_fe/data/datasource/services/internships_service.dart';
-import 'package:cari_magang_fe/data/models/internships_model/datum.dart';
-
-// class InternshipsCubit extends Cubit<InternshipsState> {
-//   InternshipsCubit() : super(InternshipsState());
-
-//   Future<void> getInternships() async {
-//     emit(state.copyWith(isLoading: true));
-
-//     var data = await InternshipsService().getInternships();
-
-//     data.fold(
-//       (left) {
-//         emit(state.copyWith(error: left));
-//       },
-//       (right) {
-//         var reversedData = right.reversed;
-//         var data = reversedData.toList();
-//         emit(state.copyWith(internshipsData: data));
-//       },
-//     );
-//     emit(state.copyWith(isLoading: false));
-//   }
-// }
 
 class InternshipsCubit extends Cubit<InternshipsState> {
   InternshipsCubit() : super(InternshipsState());
