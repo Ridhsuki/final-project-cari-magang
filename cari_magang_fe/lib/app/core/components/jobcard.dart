@@ -24,7 +24,7 @@ class JobCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 4,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: GestureDetector(
@@ -57,13 +57,6 @@ class JobCard extends StatelessWidget {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    // decoration: BoxDecoration(
-                    //   color:
-                    //       salaryType == 'Paid'
-                    //           ? Colors.green[500]
-                    //           : Colors.black,
-                    //   borderRadius: BorderRadius.circular(8),
-                    // ),
                     child: Text(
                       salaryType,
                       style: TextStyle(

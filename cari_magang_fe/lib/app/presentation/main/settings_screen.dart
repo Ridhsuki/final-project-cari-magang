@@ -1,5 +1,6 @@
 import 'package:cari_magang_fe/app/core/components/logout_dialog.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/help_screen.dart';
+import 'package:cari_magang_fe/app/presentation/main/insiders/jobapplied_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -24,12 +25,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const Center(
               child: Text(
                 'Settings',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Urbanist',
+                ),
               ),
             ),
 
             const SizedBox(height: 40),
-            _buildSettingsItem('Status Lamaran'),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => JobappliedScreen()),
+                );
+              },
+              child: _buildSettingsItem('Status Lamaran'),
+            ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
