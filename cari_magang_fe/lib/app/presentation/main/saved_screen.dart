@@ -31,7 +31,7 @@ class _SavedScreenState extends State<SavedScreen> {
             fontWeight: FontWeight.bold,
             fontSize: 20,
             color: Colors.black,
-            fontFamily: 'Urbanist'
+            fontFamily: 'Urbanist',
           ),
         ),
         centerTitle: true,
@@ -72,7 +72,7 @@ class _SavedScreenState extends State<SavedScreen> {
                     MaterialPageRoute(
                       builder:
                           (context) => JobDetailWidget(
-                             internshipId: job.id ?? 0,
+                            internshipId: job.id ?? 0,
                             title: job.title ?? '-',
                             category: job.category?.name ?? '-',
                             location: job.location ?? '-',

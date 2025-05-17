@@ -191,16 +191,18 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                           .isSaved(widget.internshipId);
                       if (mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          content: Text(
-                            isCurrentlyBookmarked ? 'Removed from saved' : 'Saved!',
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              isCurrentlyBookmarked
+                                  ? 'Removed from saved'
+                                  : 'Saved!',
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(11),
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(11),
-                          ),
-                        ),
-                      );
+                        );
                       }
                     },
                   ),
