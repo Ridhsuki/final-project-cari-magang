@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/cubit/applyjob_cubit/applyjob_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/appliedstatus_cubit/applied_status_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/logout_cubit/logout_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/notif_cubit/notif_cubit.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ProfileCubit()..getUser()),
         BlocProvider(create: (_) => InternshipsCubit()..getInternships()),
         BlocProvider(create: (_) => NotifCubit()..getNotifications()),
+        BlocProvider(create: (_) => SavedCubit()..getSavedData())
+        BlocProvider(create: (_) => SavedCubit()..getSavedData()),
+        BlocProvider(create: (_) => AppliedStatusCubit()..getAppliedData()),
         BlocProvider(
           create:
               (_) =>
@@ -50,7 +54,6 @@ class MyApp extends StatelessWidget {
                     education: '',
                   ),
         ),
-        BlocProvider(create: (_) => SavedCubit()..getSavedData())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
