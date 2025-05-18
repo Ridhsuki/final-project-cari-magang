@@ -106,13 +106,16 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                           Text(widget.status),
                         ],
                       ),
+                      const SizedBox(height: 16),
+                      const Divider(height: 12),
+                      Html(data: widget.description),
+                      const SizedBox(height: 8),
                       const Divider(height: 32),
                       const SizedBox(height: 8),
                       Html(data: widget.description),
                       const SizedBox(height: 8),
                       const SizedBox(height: 24),
                       const SizedBox(height: 8),
-                      // BulletList(items: widget.requirements),
                       const SizedBox(height: 24),
                       Center(
                         child: SizedBox(
@@ -123,7 +126,10 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ApplyjobScreen(),
+                                  builder:
+                                      (context) => const ApplyjobScreen(
+                                        internshipId: '',
+                                      ),
                                 ),
                               );
                             },
