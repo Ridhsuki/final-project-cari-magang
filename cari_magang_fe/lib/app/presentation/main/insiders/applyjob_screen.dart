@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cari_magang_fe/app/core/appcolors.dart';
@@ -9,15 +10,28 @@ import 'package:file_picker/file_picker.dart';
 import 'package:cari_magang_fe/app/cubit/applyjob_cubit/applyjob_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/applyjob_cubit/applyjob_state.dart';
 
-class ApplyjobScreen extends StatefulWidget {
+class ApplyjobScreen extends StatelessWidget {
   final String internshipId;
   const ApplyjobScreen({super.key, required this.internshipId});
 
   @override
-  State<ApplyjobScreen> createState() => _ApplyjobScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ApplyJobCubit(),
+      child: _Content(internshipId: internshipId),
+    );
+  }
 }
 
-class _ApplyjobScreenState extends State<ApplyjobScreen> {
+class _Content extends StatefulWidget {
+  final String internshipId;
+  const _Content({super.key, required this.internshipId});
+
+  @override
+  State<_Content> createState() => __ContentState();
+}
+
+class __ContentState extends State<_Content> {
   File? cvFile;
   File? certificateFile;
   final nameController = TextEditingController();
@@ -35,8 +49,8 @@ class _ApplyjobScreenState extends State<ApplyjobScreen> {
     }
   }
 
-  void _submitApplication() {
-    final cubit = context.read<ApplyJobCubit>();
+  Future<void> _submitApplication() async {
+    // final cubit = context.read<ApplyJobCubit>();
     if (cvFile == null ||
         nameController.text.isEmpty ||
         birthController.text.isEmpty ||
@@ -48,8 +62,8 @@ class _ApplyjobScreenState extends State<ApplyjobScreen> {
       return;
     }
 
-    cubit.applyJob(
-      // internshipId: widget.internshipId,
+    await context.read<ApplyJobCubit>().applyJob(
+      internshipId: widget.internshipId,
       cv: cvFile!,
       certificate: certificateFile,
       fullName: nameController.text,
@@ -61,162 +75,177 @@ class _ApplyjobScreenState extends State<ApplyjobScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Appcolors.primaryColor),
-          onPressed: () => Navigator.pop(context),
-        ),
-        elevation: 0,
+    return BlocListener<ApplyJobCubit, ApplyJobState>(
+      listenWhen:
+          (previous, current) =>
+              current.applySuccess != previous.applySuccess ||
+              current.message.isNotEmpty,
+      listener: (context, state) {
+        log(state.applySuccess.toString());
+        if (state.applyjob.message!.isNotEmpty) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder:
+                (_) => SuccessDialog(
+                  onButtonPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    // context.read<ApplyJobCubit>().resetApplyJob();
+                  },
+                ),
+          );
+        }
+
+        if (state.message.isNotEmpty) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
+        }
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
-      ),
-      body: BlocConsumer<ApplyJobCubit, ApplyJobState>(
-        listener: (context, state) {
-          if (state.message.isNotEmpty && state.applySuccess) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder:
-                  (_) => SuccessDialog(
-                    onButtonPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      context.read<ApplyJobCubit>().resetApplyJob();
-                    },
-                  ),
-            );
-          } else if (state.message.isNotEmpty) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
-          }
-        },
-        builder: (context, state) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        'Application',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Appcolors.primaryColor),
+            onPressed: () => Navigator.pop(context),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
+        body: BlocBuilder<ApplyJobCubit, ApplyJobState>(
+          //
+          builder: (context, state) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Application',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '(Insert Below)',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Appcolors.primaryColor,
+                        Text(
+                          '(Insert Below)',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Appcolors.primaryColor,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 32),
-                const Text(
-                  "CV",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                GestureDetector(
-                  onTap:
-                      () => _pickFile((file) => setState(() => cvFile = file)),
-                  child: _UploadBox(
-                    text: cvFile?.path.split('/').last ?? "Upload CV as a PDF",
-                  ),
-                ),
-                const SizedBox(height: 24),
-                const Text(
-                  "Sertification",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                GestureDetector(
-                  onTap:
-                      () => _pickFile(
-                        (file) => setState(() => certificateFile = file),
-                      ),
-                  child: _UploadBox(
-                    text:
-                        certificateFile?.path.split('/').last ??
-                        "Upload Certificate as a PDF (Optional)",
-                  ),
-                ),
-                const SizedBox(height: 32),
-                const Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        'Summary',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Personal User Data',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Appcolors.primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                _FormLabelInput(
-                  label: 'Nama \nLengkap',
-                  controller: nameController,
-                ),
-                _FormLabelInput(
-                  label: 'Tanggal \nLahir',
-                  controller: birthController,
-                ),
-                _FormLabelInput(label: 'Alamat', controller: addressController),
-                _FormLabelInput(
-                  label: 'Pendidikan \nTerakhir',
-                  controller: educationController,
-                ),
-                const SizedBox(height: 32),
-                Center(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: state.isLoading ? null : _submitApplication,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Appcolors.primaryColor,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child:
-                          state.isLoading
-                              ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                              : const Text(
-                                'Save & Apply',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                  const SizedBox(height: 32),
+                  const Text(
+                    "CV",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap:
+                        () =>
+                            _pickFile((file) => setState(() => cvFile = file)),
+                    child: _UploadBox(
+                      text:
+                          cvFile?.path.split('/').last ?? "Upload CV as a PDF",
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    "Sertification",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap:
+                        () => _pickFile(
+                          (file) => setState(() => certificateFile = file),
+                        ),
+                    child: _UploadBox(
+                      text:
+                          certificateFile?.path.split('/').last ??
+                          "Upload Certificate as a PDF (Optional)",
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  const Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Summary',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Personal User Data',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Appcolors.primaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  _FormLabelInput(
+                    label: 'Nama \nLengkap',
+                    controller: nameController,
+                  ),
+                  _FormLabelInput(
+                    label: 'Tanggal \nLahir',
+                    controller: birthController,
+                  ),
+                  _FormLabelInput(
+                    label: 'Alamat',
+                    controller: addressController,
+                  ),
+                  _FormLabelInput(
+                    label: 'Pendidikan \nTerakhir',
+                    controller: educationController,
+                  ),
+                  const SizedBox(height: 32),
+                  Center(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: state.isLoading ? null : _submitApplication,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Appcolors.primaryColor,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child:
+                            state.isLoading
+                                ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                                : const Text(
+                                  'Save & Apply',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class JobDetailWidget extends StatefulWidget {
+  final int internshipId;
   final String title;
   final String category;
   final String location;
@@ -14,6 +15,7 @@ class JobDetailWidget extends StatefulWidget {
 
   const JobDetailWidget({
     super.key,
+    required this.internshipId,
     required this.title,
     required this.category,
     required this.location,
@@ -115,11 +117,33 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => const ApplyjobScreen(
-                                        internshipId: '',
+                                      (_) => ApplyjobScreen(
+                                        internshipId:
+                                            widget.internshipId.toString(),
                                       ),
                                 ),
                               );
+                              // final id = widget.internshipId;
+                              // if (id != null) {
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder:
+                              //           (_) => ApplyjobScreen(
+                              //             internshipId: id.toString(),
+                              //           ),
+                              //     ),
+                              //   );
+                              // } else {
+                              //   print('Internship ID is null!');
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     SnackBar(
+                              //       content: Text(
+                              //         'Gagal membuka halaman apply, ID tidak ditemukan.',
+                              //       ),
+                              //     ),
+                              //   );
+                              // }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Appcolors.fourthColor,
