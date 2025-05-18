@@ -1,22 +1,22 @@
+import 'package:cari_magang_fe/app/core/components/jobdetail.dart';
+import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-class SavedScreen extends StatelessWidget {
-  final List<Map<String, String>> savedJobs = [
-    {
-      'title': 'UI UX Desainer',
-      'company': 'PT. Efishery',
-      'location': 'Semarang Timur',
-      'type': 'Onsite | Paid Intern',
-    },
-    {
-      'title': 'Graphic Design',
-      'company': 'PT. Efishery',
-      'location': 'Semarang Timur',
-      'type': 'Onsite | Paid Intern',
-    },
-  ];
+class SavedScreen extends StatefulWidget {
+  const SavedScreen({super.key});
 
-  SavedScreen({super.key});
+  @override
+  State<SavedScreen> createState() => _SavedScreenState();
+}
+
+class _SavedScreenState extends State<SavedScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<SavedCubit>().getSavedData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,46 +31,99 @@ class SavedScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 20,
             color: Colors.black,
+            fontFamily: 'Urbanist',
           ),
         ),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: savedJobs.length,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemBuilder: (context, index) {
-          final job = savedJobs[index];
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  job['title']!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepOrange,
-                    fontSize: 16,
+      body: BlocBuilder<SavedCubit, SavedState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.deepOrange),
+            );
+          }
+
+          if (state.error.isNotEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Error: ${state.error}',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
+
+          if (state.savedInternship.isEmpty) {
+            return const Center(child: Text('Belum ada data favorite.'));
+          }
+
+          return ListView.builder(
+            itemCount: state.savedInternship.length,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            itemBuilder: (context, index) {
+              final job = state.savedInternship[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => JobDetailWidget(
+                            internshipId: job.id ?? 0,
+                            title: job.title ?? '-',
+                            category: job.category?.name ?? '-',
+                            location: job.location ?? '-',
+                            system: job.system ?? '-',
+                            status: job.status ?? '-',
+                            name: job.user?.name ?? '-',
+                            description: job.description ?? '-',
+                          ),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 6),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        job.title!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        job.user?.name ?? 'null',
+                        style: TextStyle(color: Colors.black87),
+                      ),
+                      Text(
+                        job.location!,
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        '${job.system} | ${job.status!}',
+                        style: TextStyle(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(job['company']!, style: TextStyle(color: Colors.black87)),
-                Text(job['location']!, style: TextStyle(color: Colors.black54)),
-                const SizedBox(height: 6),
-                Text(
-                  job['type']!,
-                  style: TextStyle(
-                    color: Colors.deepOrange,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
