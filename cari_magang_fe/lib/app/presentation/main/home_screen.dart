@@ -1,6 +1,7 @@
 import 'package:cari_magang_fe/app/core/components/jobcard.dart';
 import 'package:cari_magang_fe/app/core/components/jobdetail.dart';
 import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
+import 'package:cari_magang_fe/app/presentation/main/insiders/jobdetail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
@@ -322,34 +323,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               final item = filteredInternships[index];
-                              return GestureDetector(
+                              return JobCard(
+                                title: item.title ?? 'No Title',
+                                company: item.user?.name ?? 'Perusahaan',
+                                location: item.location ?? '-',
+                                workplace: item.system ?? '-',
+                                salaryType: item.status!,
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) => JobDetailWidget(
-                                            internshipId: item.id ?? 0,
-                                            title: item.title ?? '-',
-                                            category:
-                                                item.category?.name ?? '-',
-                                            location: item.location ?? '-',
-                                            system: item.system ?? '-',
-                                            status: item.status ?? '-',
-                                            name: item.user?.name ?? '-',
-                                            description:
-                                                item.description ?? '-',
+                                          (context) => JobDetailScreen(
+                                            internships: item,
                                           ),
                                     ),
                                   );
                                 },
-                                child: JobCard(
-                                  title: item.title ?? 'No Title',
-                                  company: item.user?.name ?? 'Perusahaan',
-                                  location: item.location ?? '-',
-                                  workplace: item.system ?? '-',
-                                  salaryType: item.status!,
-                                ),
                               );
                             },
                           );

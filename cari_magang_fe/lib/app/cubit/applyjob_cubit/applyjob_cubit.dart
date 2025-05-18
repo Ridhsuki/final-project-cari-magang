@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,7 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
   ApplyJobCubit() : super(const ApplyJobState());
 
   Future<void> applyJob({
-    // required String internshipId,
+    required String internshipId,
     required File cv,
     required String fullName,
     required String dateOfBirth,
@@ -17,9 +18,9 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
     File? certificate,
   }) async {
     emit(state.copyWith(isLoading: true));
-
+    log('apply job cubit working');
     final result = await ApplyjobService().applyJob(
-      // internshipId: internshipId,
+      internshipId: internshipId,
       cv: cv,
       fullName: fullName,
       dateOfBirth: dateOfBirth,
@@ -27,6 +28,9 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
       education: education,
       certificate: certificate,
     );
+
+    log(result.isLeft.toString() + 'left');
+    log(result.isRight.toString() + 'right');
 
     result.fold(
       (failure) => emit(
@@ -41,7 +45,7 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
         state.copyWith(
           isLoading: false,
           applyjob: data,
-          applySuccess: true,
+          // applySuccess: true,
           message: data.message ?? 'Berhasil melamar',
         ),
       ),
