@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ProfileCubit()..getUser()),
         BlocProvider(create: (_) => InternshipsCubit()..getInternships()),
         BlocProvider(create: (_) => NotifCubit()..getNotifications()),
-        BlocProvider(create: (_) => SavedCubit()..getSavedData())
+        BlocProvider(create: (_) => SavedCubit()..getSavedData()),
         BlocProvider(create: (_) => SavedCubit()..getSavedData()),
         BlocProvider(create: (_) => AppliedStatusCubit()..getAppliedData()),
         BlocProvider(
