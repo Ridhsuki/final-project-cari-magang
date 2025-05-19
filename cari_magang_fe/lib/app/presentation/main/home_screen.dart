@@ -74,6 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Bandung',
                                 'Tangerang',
                                 'Solo',
+                                'Malang',
+                                'Jonggol',
                                 'Semua',
                               ]
                               .map(

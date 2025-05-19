@@ -52,7 +52,14 @@ class _FilteredHomeScreenState extends State<FilteredHomeScreen> {
                     Wrap(
                       spacing: 8,
                       children:
-                          ['Bekasi', 'Bandung', 'Tangerang'].map((location) {
+                          [
+                            'Bekasi',
+                            'Bandung',
+                            'Tangerang',
+                            'Solo',
+                            'Malang',
+                            'Jonggol',
+                          ].map((location) {
                             return FilterChip(
                               label: Text(location),
                               selected: selectedLocation == location,

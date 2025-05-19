@@ -42,18 +42,19 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SavedCubit()..getSavedData()),
         BlocProvider(create: (_) => SavedCubit()..getSavedData()),
         BlocProvider(create: (_) => AppliedStatusCubit()..getAppliedData()),
-        BlocProvider(
-          create:
-              (_) =>
-                  ApplyJobCubit()..applyJob(
-                    internshipId: '',
-                    cv: File(''),
-                    fullName: '',
-                    dateOfBirth: '',
-                    address: '',
-                    education: '',
-                  ),
-        ),
+        BlocProvider(create: (_) => ApplyJobCubit()),
+        // BlocProvider(
+        //   create:
+        //       (_) =>
+        //           ApplyJobCubit()..applyJob(
+        //             internshipId: '',
+        //             cv: File(''),
+        //             fullName: '',
+        //             dateOfBirth: '',
+        //             address: '',
+        //             education: '',
+        //           ),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
