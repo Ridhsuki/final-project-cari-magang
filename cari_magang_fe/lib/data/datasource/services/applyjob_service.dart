@@ -52,7 +52,9 @@ class ApplyjobService {
       var response = await dio.post('/applications', data: formData);
       log(response.data.toString());
 
-      return Right(ApplyjobModel.fromJson(response.data));
+      // return Right(ApplyjobModel.fromJson(response.data));
+      // return Right(ApplyjobModel.fromJson(response.data['data']));
+      return Right(ApplyjobModel.fromMap(response.data));
     } on DioException catch (e) {
       log('error apply job');
       log(e.message.toString());

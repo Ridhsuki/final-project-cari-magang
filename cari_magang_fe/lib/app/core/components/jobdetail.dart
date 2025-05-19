@@ -133,27 +133,6 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                                       ),
                                 ),
                               );
-                              // final id = widget.internshipId;
-                              // if (id != null) {
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder:
-                              //           (_) => ApplyjobScreen(
-                              //             internshipId: id.toString(),
-                              //           ),
-                              //     ),
-                              //   );
-                              // } else {
-                              //   print('Internship ID is null!');
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(
-                              //       content: Text(
-                              //         'Gagal membuka halaman apply, ID tidak ditemukan.',
-                              //       ),
-                              //     ),
-                              //   );
-                              // }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Appcolors.fourthColor,
