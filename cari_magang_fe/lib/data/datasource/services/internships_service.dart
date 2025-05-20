@@ -22,7 +22,6 @@ class InternshipsService {
       final response = await dio.get('/internships');
 
       final raw = response.data;
-      // print('Response data: $raw');
 
       if (raw is Map<String, dynamic>) {
         final internshipModel = InternshipsModel.fromMap(raw);

@@ -112,11 +112,6 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       const SizedBox(height: 8),
                       const Divider(height: 32),
                       const SizedBox(height: 8),
-                      Html(data: widget.description),
-                      const SizedBox(height: 8),
-                      const SizedBox(height: 24),
-                      const SizedBox(height: 8),
-                      const SizedBox(height: 24),
                       Center(
                         child: SizedBox(
                           width: 180,

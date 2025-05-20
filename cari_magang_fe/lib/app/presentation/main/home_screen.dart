@@ -1,11 +1,14 @@
 import 'package:cari_magang_fe/app/core/components/jobcard.dart';
-import 'package:cari_magang_fe/app/core/components/jobdetail.dart';
 import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_state.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/jobdetail_screen.dart';
+import 'package:cari_magang_fe/data/models/internships_model/datum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/internships_cubit/internships_state.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? locationFilter;
@@ -158,18 +161,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final internships = context.watch<InternshipsCubit>().state.internshipsData;
+    final isLoading = context.watch<InternshipsCubit>().state.isLoading;
+
+    final locationData = countJobsByLocation(internships);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
-                child: Text(
-                  'ALDO FERNAN',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              Center(
+                child: BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                    return Text(
+                      state.profile.data?.name ?? 'user',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 16),
@@ -223,8 +237,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Chart
                       Center(
                         child: Container(
-                          height: 177,
-                          width: 334,
+                          height: 200,
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.orange.shade50,
                             borderRadius: BorderRadius.circular(20),
@@ -233,13 +252,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.grey.withValues(alpha: 0.5),
                                 spreadRadius: 0,
                                 blurRadius: 3,
-                                offset: const Offset(0, 3),
+                                offset: Offset(0, 3),
                               ),
                             ],
                           ),
-                          child: const Center(child: Text('Chart Placeholder')),
+                          child:
+                              isLoading
+                                  ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.deepOrange,
+                                    ),
+                                  )
+                                  : LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return SizedBox(
+                                        width: constraints.maxWidth,
+                                        height: constraints.maxHeight,
+                                        child: buildLocationChart(locationData),
+                                      );
+                                    },
+                                  ),
                         ),
                       ),
+
                       const SizedBox(height: 30),
 
                       const Text(
@@ -299,26 +334,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           }
 
-                          // BlocBuilder<InternshipsCubit, InternshipsState>(
-                          //   builder: (context, state) {
-                          //     if (state.isLoading) {
-                          //       return Center(
-                          //         child: CircularProgressIndicator(
-                          //           color: Colors.deepOrange,
-                          //         ),
-                          //       );
-                          //     }
-                          //     if (state.error != '') {
-                          //       return Center(
-                          //         child: Text('Error: ${state.error}'),
-                          //       );
-                          //     }
-                          //     if (state.internshipsData.isEmpty) {
-                          //       return const Center(
-                          //         child: Text('No internships available.'),
-                          //       );
-                          //     }
-
                           return ListView.builder(
                             itemCount: filteredInternships.length,
                             physics: NeverScrollableScrollPhysics(),
@@ -357,4 +372,61 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Map<String, int> countJobsByLocation(List<Datum> data) {
+  final Map<String, int> locationCounts = {};
+
+  for (var item in data) {
+    final location = item.location ?? 'Unknown';
+    locationCounts[location] = (locationCounts[location] ?? 0) + 1;
+  }
+
+  return locationCounts;
+}
+
+Widget buildLocationChart(Map<String, int> dataMap) {
+  final List<BarChartGroupData> barGroups = [];
+  int index = 0;
+
+  dataMap.forEach((location, count) {
+    barGroups.add(
+      BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: count.toDouble(),
+            color: Colors.deepOrange,
+            width: 18,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+        showingTooltipIndicators: [],
+      ),
+    );
+    index++;
+  });
+
+  return BarChart(
+    BarChartData(
+      alignment: BarChartAlignment.spaceAround,
+      maxY: (dataMap.values.reduce((a, b) => a > b ? a : b)).toDouble() + 1,
+      barGroups: barGroups,
+      titlesData: FlTitlesData(
+        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              final location = dataMap.keys.toList()[value.toInt()];
+              return Text(location, style: TextStyle(fontSize: 10));
+            },
+          ),
+        ),
+        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
+        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      ),
+      borderData: FlBorderData(show: false),
+    ),
+  );
 }
