@@ -253,6 +253,15 @@ class __ContentState extends State<_Content> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    birthController.dispose();
+    addressController.dispose();
+    educationController.dispose();
+    super.dispose();
+  }
 }
 
 class _UploadBox extends StatelessWidget {

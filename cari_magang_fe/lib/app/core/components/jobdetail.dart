@@ -139,11 +139,15 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
 
                               if (alreadyApplied) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text(
-                                      'You have already applied to this internship.',
+                                      'Kamu sudah melamar pekerjaan ini. Tunggu notifikasi dari kami yaa.',
                                     ),
+                                    backgroundColor: Appcolors.primaryColor,
                                     behavior: SnackBarBehavior.floating,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(11),
+                                    ),
                                   ),
                                 );
                               } else {
