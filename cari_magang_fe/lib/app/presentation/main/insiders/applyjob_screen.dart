@@ -1,13 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cari_magang_fe/app/core/appcolors.dart';
-import 'package:cari_magang_fe/app/core/components/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:cari_magang_fe/app/core/components/success_dialog.dart';
+import 'package:cari_magang_fe/data/models/profile_model/profile_model.dart';
 import 'package:cari_magang_fe/app/cubit/applyjob_cubit/applyjob_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/applyjob_cubit/applyjob_state.dart';
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
+import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_state.dart';
 
 class ApplyjobScreen extends StatelessWidget {
   final String internshipId;
@@ -15,8 +17,11 @@ class ApplyjobScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ApplyJobCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ApplyJobCubit()),
+        BlocProvider(create: (_) => ProfileCubit()..getUser()),
+      ],
       child: _Content(internshipId: internshipId),
     );
   }
@@ -37,6 +42,7 @@ class __ContentState extends State<_Content> {
   final birthController = TextEditingController();
   final addressController = TextEditingController();
   final educationController = TextEditingController();
+  bool isProfileFilled = false;
 
   void _pickFile(Function(File) onFilePicked) async {
     final result = await FilePicker.platform.pickFiles(
@@ -49,7 +55,6 @@ class __ContentState extends State<_Content> {
   }
 
   Future<void> _submitApplication() async {
-    // final cubit = context.read<ApplyJobCubit>();
     if (cvFile == null ||
         nameController.text.isEmpty ||
         birthController.text.isEmpty ||
@@ -75,6 +80,19 @@ class __ContentState extends State<_Content> {
     );
   }
 
+  void _autoFillProfile(ProfileModel profileModel) {
+    if (!isProfileFilled && profileModel.data?.profile != null) {
+      final profile = profileModel.data!.profile!;
+
+      nameController.text = profileModel.data?.name ?? '';
+      birthController.text = profile.dateOfBirth?.toString() ?? '';
+      addressController.text = profile.address ?? '';
+      educationController.text = profile.education?.toString() ?? '';
+
+      isProfileFilled = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ApplyJobCubit, ApplyJobState>(
@@ -93,7 +111,6 @@ class __ContentState extends State<_Content> {
                   onButtonPressed: () {
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    // context.read<ApplyJobCubit>().resetApplyJob();
                   },
                 ),
           );
@@ -118,135 +135,152 @@ class __ContentState extends State<_Content> {
           elevation: 0,
           backgroundColor: Colors.white,
         ),
-        body: BlocBuilder<ApplyJobCubit, ApplyJobState>(
-          builder: (context, state) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Application',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+        body: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, profileState) {
+            _autoFillProfile(profileState.profile);
+
+            return BlocBuilder<ApplyJobCubit, ApplyJobState>(
+              builder: (context, applyState) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Application',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              '(Insert Below)',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          '(Insert Below)',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Appcolors.primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  const Text(
-                    "CV",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap:
-                        () =>
-                            _pickFile((file) => setState(() => cvFile = file)),
-                    child: _UploadBox(
-                      text:
-                          cvFile?.path.split('/').last ?? "Upload CV as a PDF",
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    "Sertification",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap:
-                        () => _pickFile(
-                          (file) => setState(() => certificateFile = file),
-                        ),
-                    child: _UploadBox(
-                      text:
-                          certificateFile?.path.split('/').last ??
-                          "Upload Certificate as a PDF (Optional)",
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  const Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Summary',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Personal User Data',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Appcolors.primaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  _FormLabelInput(
-                    label: 'Nama \nLengkap',
-                    controller: nameController,
-                  ),
-                  _FormLabelInput(
-                    label: 'Tanggal \nLahir',
-                    controller: birthController,
-                  ),
-                  _FormLabelInput(
-                    label: 'Alamat',
-                    controller: addressController,
-                  ),
-                  _FormLabelInput(
-                    label: 'Pendidikan \nTerakhir',
-                    controller: educationController,
-                  ),
-                  const SizedBox(height: 32),
-                  Center(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: state.isLoading ? null : _submitApplication,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Appcolors.primaryColor,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child:
-                            state.isLoading
-                                ? const CircularProgressIndicator(
-                                  color: Colors.white,
-                                )
-                                : const Text(
-                                  'Save & Apply',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
                       ),
-                    ),
+                      const SizedBox(height: 32),
+                      const Text(
+                        "CV",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        onTap:
+                            () => _pickFile(
+                              (file) => setState(() => cvFile = file),
+                            ),
+                        child: _UploadBox(
+                          text:
+                              cvFile?.path.split('/').last ??
+                              "Upload CV as a PDF",
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        "Sertification",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        onTap:
+                            () => _pickFile(
+                              (file) => setState(() => certificateFile = file),
+                            ),
+                        child: _UploadBox(
+                          text:
+                              certificateFile?.path.split('/').last ??
+                              "Upload Certificate as a PDF (Optional)",
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      const Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Summary',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Personal User Data',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Appcolors.primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      _FormLabelInput(
+                        label: 'Nama \nLengkap',
+                        controller: nameController,
+                      ),
+                      _FormLabelInput(
+                        label: 'Tanggal \nLahir',
+                        controller: birthController,
+                      ),
+                      _FormLabelInput(
+                        label: 'Alamat',
+                        controller: addressController,
+                      ),
+                      _FormLabelInput(
+                        label: 'Pendidikan \nTerakhir',
+                        controller: educationController,
+                      ),
+                      const SizedBox(height: 32),
+                      Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed:
+                                applyState.isLoading
+                                    ? null
+                                    : _submitApplication,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Appcolors.primaryColor,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child:
+                                applyState.isLoading
+                                    ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                    : const Text(
+                                      'Save & Apply',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             );
           },
         ),
