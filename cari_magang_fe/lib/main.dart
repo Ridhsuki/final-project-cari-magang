@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cari_magang_fe/app/cubit/applyjob_cubit/applyjob_cubit.dart';
@@ -43,18 +42,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SavedCubit()..getSavedData()),
         BlocProvider(create: (_) => AppliedStatusCubit()..getAppliedData()),
         BlocProvider(create: (_) => ApplyJobCubit()),
-        // BlocProvider(
-        //   create:
-        //       (_) =>
-        //           ApplyJobCubit()..applyJob(
-        //             internshipId: '',
-        //             cv: File(''),
-        //             fullName: '',
-        //             dateOfBirth: '',
-        //             address: '',
-        //             education: '',
-        //           ),
-        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -63,14 +63,16 @@ class _NotifScreenState extends State<NotifScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text(
+          title: Text(
             'Notification',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
+              fontFamily: 'Urbanist',
             ),
           ),
           centerTitle: true,

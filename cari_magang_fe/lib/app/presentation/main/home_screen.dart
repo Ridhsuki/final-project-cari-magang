@@ -44,108 +44,175 @@ class _HomeScreenState extends State<HomeScreen> {
   void openFilterModel() async {
     final result = await showModalBottomSheet<Map<String, String?>>(
       context: context,
+      isScrollControlled: true,
       builder: (context) {
         String? thisLocation = selectedLocation;
         String? thisStatus = selectedStatus;
         String? thisSystem = selectedSystem;
 
+        final internships =
+            context.read<InternshipsCubit>().state.internshipsData;
+
+        // Ambil lokasi unik dari data
+        final locationSet = <String>{};
+        for (var internship in internships) {
+          final loc = internship.location;
+          if (loc != null && loc.isNotEmpty) {
+            locationSet.add(loc);
+          }
+        }
+
+        final locationList = locationSet.toList()..sort();
+        locationList.add('Semua');
+
+        final statusList = ['paid', 'unpaid', 'Semua'];
+        final systemList = ['on-site', 'remote', 'hybrid', 'Semua'];
+
         return StatefulBuilder(
-          builder:
-              (context, setModalState) => Container(
-                padding: const EdgeInsets.all(16),
-                height: 300,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Filter',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+          builder: (context, setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Filter',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
-                    // Place filter dropdown
-                    DropdownButton<String>(
-                      value: thisLocation,
-                      hint: const Text('Select Location'),
-                      isExpanded: true,
-                      items:
-                          <String>[
-                                'Bekasi',
-                                'Bandung',
-                                'Tangerang',
-                                'Solo',
-                                'Malang',
-                                'Jonggol',
-                                'Semua',
-                              ]
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e == 'Semua' ? null : e,
-                                  child: Text(e),
+                      /// LOCATION
+                      const Text('Location'),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children:
+                            locationList.map((loc) {
+                              final isSelected =
+                                  thisLocation == (loc == 'Semua' ? null : loc);
+
+                              return ChoiceChip(
+                                label: Text(loc),
+                                selected: isSelected,
+                                onSelected: (_) {
+                                  setModalState(() {
+                                    thisLocation = loc == 'Semua' ? null : loc;
+                                  });
+                                },
+                                selectedColor: Colors.deepOrange,
+                                labelStyle: TextStyle(
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
                                 ),
-                              )
-                              .toList(),
-                      onChanged: (val) {
-                        setModalState(() => thisLocation = val);
-                      },
-                    ),
+                                showCheckmark: false,
+                              );
+                            }).toList(),
+                      ),
 
-                    // Salary filter dropdown
-                    DropdownButton<String>(
-                      value: thisStatus,
-                      hint: const Text('Select Status'),
-                      isExpanded: true,
-                      items:
-                          <String>['paid', 'unpaid', 'Semua']
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e == 'Semua' ? null : e,
-                                  child: Text(e),
+                      const SizedBox(height: 16),
+
+                      /// STATUS
+                      const Text('Status'),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        children:
+                            statusList.map((status) {
+                              final isSelected =
+                                  thisStatus ==
+                                  (status == 'Semua' ? null : status);
+                              return ChoiceChip(
+                                label: Text(status),
+                                selected: isSelected,
+                                onSelected: (_) {
+                                  setModalState(() {
+                                    thisStatus =
+                                        status == 'Semua' ? null : status;
+                                  });
+                                },
+                                selectedColor: Colors.deepOrange,
+                                labelStyle: TextStyle(
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
                                 ),
-                              )
-                              .toList(),
-                      onChanged: (val) {
-                        setModalState(() => thisStatus = val);
-                      },
-                    ),
+                                showCheckmark: false,
+                              );
+                            }).toList(),
+                      ),
 
-                    // System filter dropdown
-                    DropdownButton<String>(
-                      value: thisSystem,
-                      hint: const Text('Select System'),
-                      isExpanded: true,
-                      items:
-                          <String>['on-site', 'remote', 'hybrid', 'Semua']
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e == 'Semua' ? null : e,
-                                  child: Text(e),
+                      const SizedBox(height: 16),
+
+                      /// SYSTEM
+                      const Text('System'),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        children:
+                            systemList.map((sys) {
+                              final isSelected =
+                                  thisSystem == (sys == 'Semua' ? null : sys);
+                              return ChoiceChip(
+                                label: Text(sys),
+                                selected: isSelected,
+                                onSelected: (_) {
+                                  setModalState(() {
+                                    thisSystem = sys == 'Semua' ? null : sys;
+                                  });
+                                },
+                                selectedColor: Colors.deepOrange,
+                                labelStyle: TextStyle(
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
                                 ),
-                              )
-                              .toList(),
-                      onChanged: (val) {
-                        setModalState(() => thisSystem = val);
-                      },
-                    ),
+                                showCheckmark: false,
+                              );
+                            }).toList(),
+                      ),
 
-                    const Spacer(),
+                      const SizedBox(height: 24),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context, {
-                          'location': thisLocation,
-                          'status': thisStatus,
-                          'system': thisSystem,
-                        });
-                      },
-                      child: const Text('Apply Filter'),
-                    ),
-                  ],
+                      /// APPLY BUTTON
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepOrange,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            textStyle: const TextStyle(fontSize: 14),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context, {
+                              'location': thisLocation,
+                              'status': thisStatus,
+                              'system': thisSystem,
+                            });
+                          },
+                          child: const Text(
+                            'Apply Filter',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            );
+          },
         );
       },
     );
@@ -181,6 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
+                        fontFamily: 'Urbanist',
                       ),
                     );
                   },
@@ -249,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withValues(alpha: 0.5),
+                                color: Colors.grey.withValues(alpha: 0.3),
                                 spreadRadius: 0,
                                 blurRadius: 3,
                                 offset: Offset(0, 3),
@@ -374,6 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// CHART Job Vacancy per Location
 Map<String, int> countJobsByLocation(List<Datum> data) {
   final Map<String, int> locationCounts = {};
 

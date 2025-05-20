@@ -22,13 +22,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final name = nameController.text.trim();
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-    final confirmPassword = confirmPasswordController.text.trim();
+    confirmPasswordController.text.trim();
 
     if (email.isNotEmpty && password.isNotEmpty) {
       context.read<RegisterCubit>().doRegister(name, email, password);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
+          behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.red,
           content: Text(
             'Tidak boleh ada yang kosong',
@@ -50,6 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         if (state.registResponse.message != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.green,
               content: Text(
                 state.registResponse.message ?? 'Register berhasil',
@@ -64,6 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         if (state.error != '') {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.red,
               content: Text(
                 state.error,
@@ -136,7 +139,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Container(
                   color: Color(0xffffffff),
                   child: SingleChildScrollView(
-                    // <- Tambahkan ini
                     padding: const EdgeInsets.symmetric(
                       horizontal: 42,
                       vertical: 43,
@@ -159,6 +161,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             prefixIcon: const Icon(Icons.person_outlined),
                             hintText: 'Name',
                             labelText: 'Name',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor.withOpacity(0.5),
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -171,6 +185,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             prefixIcon: const Icon(Icons.email_outlined),
                             hintText: 'Email Address',
                             labelText: 'Email Address',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor.withOpacity(0.5),
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -185,6 +211,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             suffixIcon: const Icon(Icons.visibility),
                             hintText: 'Password',
                             labelText: 'Password',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor.withOpacity(0.5),
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -199,6 +237,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             suffixIcon: const Icon(Icons.visibility),
                             hintText: 'ConfirmPassword',
                             labelText: 'Confirm Password',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor.withOpacity(0.5),
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -217,7 +267,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Continue',
+                              'Sign Up',
                               style: TextStyle(
                                 fontSize: 15,
                                 color: Color(0xffffffff),
@@ -225,7 +275,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5), // Ganti Spacer ke SizedBox
+                        const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

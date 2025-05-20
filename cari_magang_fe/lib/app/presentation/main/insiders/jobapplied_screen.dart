@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/components/appliedcard.dart';
 import 'package:cari_magang_fe/app/cubit/appliedstatus_cubit/applied_status_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/appliedstatus_cubit/applied_status_state.dart';
@@ -23,6 +24,10 @@ class _JobappliedScreenState extends State<JobappliedScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Appcolors.primaryColor),
+          onPressed: () => Navigator.pop(context),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
@@ -58,7 +63,9 @@ class _JobappliedScreenState extends State<JobappliedScreen> {
             }
 
             if (state.appliedInternship.isEmpty) {
-              return const Center(child: Text('Belum ada lamaran yang di kirim.'));
+              return const Center(
+                child: Text('Belum ada lamaran yang di kirim.'),
+              );
             }
 
             return SingleChildScrollView(

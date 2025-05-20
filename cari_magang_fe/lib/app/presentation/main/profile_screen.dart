@@ -50,7 +50,6 @@ class _ContentState extends State<_Content> {
       backgroundColor: Colors.white,
       body: BlocListener<ProfileCubit, ProfileState>(
         listener: (context, state) {
-          print("State setelah listener: ${state}");
           if (!state.isLoading) {
             if (state.error.isNotEmpty) {
               showCustomSnackBar(context, state.error, false);
@@ -76,7 +75,7 @@ class _ContentState extends State<_Content> {
             if (state.error != '') {
               return Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(17.0),
+                  padding: EdgeInsets.all(17.0),
                   child: Text(state.error, textAlign: TextAlign.center),
                 ),
               );
@@ -100,6 +99,7 @@ class _ContentState extends State<_Content> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Urbanist'
                       ),
                     ),
                     SizedBox(height: 24),
@@ -359,7 +359,6 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
       setState(() {
         _pickedImage = File(pickedFile.path);
       });
-      print("Gambar dipilih di EditProfileSheet: $_pickedImage");
       widget.onImageChanged(_pickedImage);
     }
   }

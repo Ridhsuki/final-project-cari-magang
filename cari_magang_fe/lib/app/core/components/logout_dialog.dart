@@ -112,6 +112,7 @@ class LogoutDialog extends StatelessWidget {
                                   if (!context.mounted) return;
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
+                                      behavior: SnackBarBehavior.floating,
                                       content: Text('Token tidak tersedia.'),
                                       backgroundColor: Colors.red,
                                     ),

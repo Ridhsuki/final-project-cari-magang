@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/components/success_dialog.dart';
-import 'package:cari_magang_fe/data/models/applyjob_model/applyjob_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
@@ -25,7 +24,7 @@ class ApplyjobScreen extends StatelessWidget {
 
 class _Content extends StatefulWidget {
   final String internshipId;
-  const _Content({super.key, required this.internshipId});
+  const _Content({required this.internshipId});
 
   @override
   State<_Content> createState() => __ContentState();
@@ -57,7 +56,10 @@ class __ContentState extends State<_Content> {
         addressController.text.isEmpty ||
         educationController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Harap lengkapi data dan unggah CV')),
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text('Harap lengkapi data dan unggah CV'),
+        ),
       );
       return;
     }
@@ -98,9 +100,12 @@ class __ContentState extends State<_Content> {
         }
 
         if (state.message.isNotEmpty) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(state.message),
+            ),
+          );
         }
       },
       child: Scaffold(

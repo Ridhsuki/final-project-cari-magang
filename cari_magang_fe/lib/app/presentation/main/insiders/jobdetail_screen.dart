@@ -8,7 +8,6 @@ class JobDetailScreen extends StatelessWidget {
   const JobDetailScreen({
     super.key,
     required this.internships,
-    // required Map<String, String> job,
   });
 
   @override

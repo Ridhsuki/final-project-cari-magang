@@ -33,8 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
       context.read<LoginCubit>().doLogin(email, password);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(11),
+          ),
           content: Text(
             'Email dan password tidak boleh kosong',
             style: TextStyle(color: Colors.white),
@@ -56,6 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(11),
+              ),
+
               content: Text(
                 state.loginResponse.message ?? 'Login berhasil',
                 style: const TextStyle(color: Colors.white),
@@ -71,6 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state.error != '') {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(11),
+              ),
+
               backgroundColor: Colors.red,
               content: Text(
                 state.error,
@@ -158,6 +172,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             prefixIcon: const Icon(Icons.email_outlined),
                             hintText: 'Email Address',
                             labelText: 'Email Address',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor.withOpacity(0.5),
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -172,6 +198,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             suffixIcon: const Icon(Icons.visibility),
                             hintText: 'Password',
                             labelText: 'Password',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Appcolors.primaryColor.withOpacity(0.5),
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
