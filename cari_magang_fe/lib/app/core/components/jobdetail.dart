@@ -2,6 +2,7 @@ import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_state.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/applyjob_screen.dart';
+import 'package:cari_magang_fe/app/cubit/appliedstatus_cubit/applied_status_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -34,6 +35,11 @@ class JobDetailWidget extends StatefulWidget {
 
 class _JobDetailWidgetState extends State<JobDetailWidget> {
   bool isBookmarked = false;
+  @override
+  void initState() {
+    super.initState();
+    context.read<AppliedStatusCubit>().getAppliedData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,16 +124,40 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                           height: 38,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (_) => ApplyjobScreen(
-                                        internshipId:
-                                            widget.internshipId.toString(),
-                                      ),
-                                ),
+                              final appliedInternships =
+                                  context
+                                      .read<AppliedStatusCubit>()
+                                      .state
+                                      .appliedInternship;
+
+                              // Cek apakah internship sudah pernah di-apply
+                              final alreadyApplied = appliedInternships.any(
+                                (application) =>
+                                    application.internship?.id ==
+                                    widget.internshipId,
                               );
+
+                              if (alreadyApplied) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'You have already applied to this internship.',
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (_) => ApplyjobScreen(
+                                          internshipId:
+                                              widget.internshipId.toString(),
+                                        ),
+                                  ),
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Appcolors.fourthColor,

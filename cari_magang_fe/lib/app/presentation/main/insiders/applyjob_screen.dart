@@ -119,7 +119,6 @@ class __ContentState extends State<_Content> {
           backgroundColor: Colors.white,
         ),
         body: BlocBuilder<ApplyJobCubit, ApplyJobState>(
-          //
           builder: (context, state) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(24),
