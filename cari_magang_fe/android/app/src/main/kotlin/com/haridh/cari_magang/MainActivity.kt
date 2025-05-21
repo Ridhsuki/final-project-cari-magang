@@ -1,4 +1,4 @@
-package com.example.cari_magang_fe
+package com.haridh.cari_magang
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.cari_magang_fe"
+    namespace = "com.haridh.cari_magang"
     compileSdk = 36
     ndkVersion = "27.0.12077973"
 
@@ -30,7 +30,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.musuki.cari_magang"
+        applicationId = "com.haridh.cari_magang"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 25
