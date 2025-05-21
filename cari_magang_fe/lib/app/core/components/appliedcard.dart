@@ -114,6 +114,7 @@ class AppliedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey.shade100,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 1,
@@ -132,7 +133,8 @@ class AppliedCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Appcolors.primaryColor,
-                      fontSize: 18,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
                     ),
                   ),
                   // Display the simple status badge next to the title
@@ -142,7 +144,12 @@ class AppliedCard extends StatelessWidget {
               SizedBox(height: 6),
               Text(
                 company,
-                style: const TextStyle(color: Colors.grey, fontSize: 12),
+                style: const TextStyle(
+                  color: Appcolors.thirdColor,
+                  fontSize: 11,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               SizedBox(height: 12),
               // Display the entire progress status here

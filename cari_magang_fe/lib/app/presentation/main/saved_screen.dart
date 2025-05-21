@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/components/jobdetail.dart';
 import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/saved_cubit/saved_state.dart';
@@ -99,25 +100,33 @@ class _SavedScreenState extends State<SavedScreen> {
                         job.title!,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.deepOrange,
+                          fontFamily: 'Inter',
+                          color: Appcolors.primaryColor,
                           fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         job.user?.name ?? 'null',
-                        style: TextStyle(color: Colors.black87),
+                        style: TextStyle(
+                          color: Appcolors.thirdColor,
+                          fontFamily: 'Inter',
+                        ),
                       ),
                       Text(
                         job.location!,
-                        style: TextStyle(color: Colors.black54),
+                        style: TextStyle(
+                          color: Appcolors.thirdColor,
+                          fontFamily: 'Inter',
+                        ),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         '${job.system} | ${job.status!}',
                         style: TextStyle(
-                          color: Colors.deepOrange,
+                          color: Appcolors.primaryColor,
                           fontWeight: FontWeight.w500,
+                          fontFamily: 'Inter',
                         ),
                       ),
                     ],

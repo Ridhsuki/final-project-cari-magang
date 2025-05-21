@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/components/logout_dialog.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/help_screen.dart';
 import 'package:cari_magang_fe/app/presentation/main/insiders/jobapplied_screen.dart';
@@ -52,7 +53,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               child: _buildSettingsItem('Help & Support'),
             ),
-            _buildSettingsItem('Change Password'),
             GestureDetector(
               onTap: () {
                 showDialog(
@@ -81,12 +81,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: const Color(0xFFFEEFE7),
+          color: Appcolors.fourthColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
           title,
-          style: const TextStyle(fontSize: 16, color: Colors.black),
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            fontFamily: 'Inter',
+            color: Appcolors.secondaryColor,
+          ),
           textAlign: TextAlign.center,
         ),
       ),

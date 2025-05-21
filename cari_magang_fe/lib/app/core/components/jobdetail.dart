@@ -64,6 +64,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                         widget.title,
                         style: const TextStyle(
                           fontSize: 22,
+                          fontFamily: 'Inter',
                           fontWeight: FontWeight.bold,
                           color: Appcolors.primaryColor,
                         ),
@@ -74,6 +75,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                         style: const TextStyle(
                           color: Appcolors.thirdColor,
                           fontWeight: FontWeight.w500,
+                          fontFamily: 'Inter',
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -85,7 +87,13 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                             color: Appcolors.fourthColor,
                           ),
                           const SizedBox(width: 4),
-                          Text(widget.location),
+                          Text(
+                            widget.location,
+                            style: TextStyle(
+                              color: Appcolors.thirdColor,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 4),
@@ -97,7 +105,13 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                             color: Appcolors.fourthColor,
                           ),
                           const SizedBox(width: 4),
-                          Text(widget.system),
+                          Text(
+                            widget.system,
+                            style: TextStyle(
+                              color: Appcolors.thirdColor,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 4),
@@ -109,7 +123,13 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                             color: Appcolors.fourthColor,
                           ),
                           const SizedBox(width: 4),
-                          Text(widget.status),
+                          Text(
+                            widget.status,
+                            style: TextStyle(
+                              color: Appcolors.thirdColor,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 16),
@@ -172,7 +192,11 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                             ),
                             child: const Text(
                               'Apply now',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -192,10 +216,7 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
             child: CircleAvatar(
               backgroundColor: Colors.black.withAlpha((0.2 * 255).toInt()),
               child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Appcolors.fourthColor,
-                ),
+                icon: const Icon(Icons.arrow_back, color: Appcolors.thirdColor),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -229,10 +250,15 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
+                            backgroundColor: Appcolors.fourthColor,
                             content: Text(
                               isCurrentlyBookmarked
                                   ? 'Removed from saved'
                                   : 'Saved!',
+                              style: TextStyle(
+                                color: Appcolors.secondaryColor,
+                                fontFamily: 'Inter',
+                              ),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(11),

@@ -9,9 +9,9 @@ class SuccessDialog extends StatelessWidget {
 
   const SuccessDialog({
     super.key,
-    this.title = "Application Successful",
+    this.title = "Berhasil Apply Pekerjaan",
     this.message =
-        "We'll notify you once there's an update.\nKeep an eye on your messages!",
+        "Kami akan memberitahu kamu pembaruan selanjutnya melalui notifikasi.\nTetap semangat!",
     this.buttonText = "Back",
     required this.onButtonPressed,
   });
@@ -24,17 +24,31 @@ class SuccessDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.check_circle_outline, size: 64, color: Colors.black),
+          const Icon(
+            Icons.check_circle_outline,
+            size: 93,
+            color: Appcolors.thirdColor,
+          ),
           const SizedBox(height: 16),
           Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: const TextStyle(
+              color: Appcolors.thirdColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              fontFamily: 'Urbanist',
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
           Text(
             message,
-            style: const TextStyle(fontSize: 14, color: Colors.grey),
+            style: const TextStyle(
+              fontSize: 12,
+              color: Appcolors.thirdColor,
+              fontFamily: 'Urbanist',
+              fontWeight: FontWeight.w500,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
@@ -51,7 +65,12 @@ class SuccessDialog extends StatelessWidget {
               ),
               child: Text(
                 buttonText,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Appcolors.secondaryColor,
+                  fontFamily: 'Inter',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

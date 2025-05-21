@@ -27,7 +27,7 @@ class LogoutDialog extends StatelessWidget {
       },
       builder: (context, state) {
         return AlertDialog(
-          backgroundColor: const Color(0xFFFDF6F4),
+          backgroundColor: Appcolors.secondaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -52,7 +52,7 @@ class LogoutDialog extends StatelessWidget {
               const Text(
                 'Apakah Anda yakin ingin keluar dari akun ini?',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.black87),
+                style: TextStyle(fontSize: 14, color: Appcolors.thirdColor),
               ),
 
               const SizedBox(height: 24),
