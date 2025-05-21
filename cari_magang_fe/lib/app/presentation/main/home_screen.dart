@@ -1,3 +1,4 @@
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/core/components/jobcard.dart';
 import 'package:cari_magang_fe/app/core/stringconst/assets_const.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
   late String? selectedLocation;
   late String? selectedStatus;
   late String? selectedSystem;
@@ -39,6 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
     selectedLocation = widget.locationFilter;
     selectedStatus = widget.statusFilter;
     selectedSystem = widget.systemFilter;
+
+    _searchController.addListener(() {
+      final query = _searchController.text;
+      context.read<InternshipsCubit>().searchInternships(query);
+    });
   }
 
   void openFilterModel() async {
@@ -259,20 +266,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Expanded(
                     child: TextField(
+                      onChanged: (value) {
+                        context.read<InternshipsCubit>().searchInternships(
+                          value,
+                        );
+                      },
+                      controller: _searchController,
                       decoration: InputDecoration(
                         prefixIcon: Image.asset(AssetsConst.searchIcon),
                         hintText: 'Search...',
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: const BorderSide(
-                            color: Colors.black,
+                            color: Appcolors.thirdColor,
                             width: 2,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: const BorderSide(
-                            color: Colors.black,
+                            color: Appcolors.thirdColor,
                             width: 3,
                           ),
                         ),
@@ -369,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
 
                           final filteredInternships =
-                              state.internshipsData.where((item) {
+                              state.filteredData.where((item) {
                                 final matchesLocation =
                                     selectedLocation == null ||
                                     (item.location?.toLowerCase().contains(
@@ -439,6 +452,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }
 

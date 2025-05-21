@@ -17,8 +17,27 @@ class InternshipsCubit extends Cubit<InternshipsState> {
       (internshipsModel) {
         final data = internshipsModel.data ?? [];
         final reversed = data.reversed.toList();
-        emit(state.copyWith(internshipsData: reversed, isLoading: false));
+        emit(
+          state.copyWith(
+            internshipsData: reversed,
+            filteredData: reversed,
+            isLoading: false,
+          ),
+        );
       },
     );
+  }
+
+  void searchInternships(String query) {
+    final filtered =
+        state.internshipsData.where((item) {
+          final title = item.title?.toLowerCase() ?? '';
+          final location = item.location?.toLowerCase() ?? '';
+          final q = query.toLowerCase();
+
+          return title.contains(q) || location.contains(q);
+        }).toList();
+
+    emit(state.copyWith(filteredData: filtered));
   }
 }
