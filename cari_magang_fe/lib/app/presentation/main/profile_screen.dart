@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cari_magang_fe/app/core/appcolors.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_cubit.dart';
 import 'package:cari_magang_fe/app/cubit/profile_cubit/profile_state.dart';
 import 'package:cari_magang_fe/data/models/profile_model/profile_model.dart';
@@ -99,7 +100,7 @@ class _ContentState extends State<_Content> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Urbanist'
+                        fontFamily: 'Urbanist',
                       ),
                     ),
                     SizedBox(height: 24),
@@ -191,7 +192,7 @@ class _ContentState extends State<_Content> {
                             _showEditProfileSheet(context, profile);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
+                            backgroundColor: Appcolors.primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),

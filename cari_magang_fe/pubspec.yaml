@@ -87,17 +87,55 @@ flutter:
   fonts:
     - family: Urbanist
       fonts:
+        - asset: assets/fonts/urbanist/Urbanist-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/urbanist/Urbanist-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/urbanist/Urbanist-Light.ttf
+          weight: 300
+        - asset: assets/fonts/urbanist/Urbanist-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/urbanist/Urbanist-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/urbanist/Urbanist-SemiBold.ttf
+          weight: 600
         - asset: assets/fonts/urbanist/Urbanist-Bold.ttf
           weight: 700
+        - asset: assets/fonts/urbanist/Urbanist-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/urbanist/Urbanist-Black.ttf
+          weight: 900
     - family: Syne
       fonts:
         - asset: assets/fonts/syne/Syne-Regular.ttf
           weight: 400
+        - asset: assets/fonts/syne/Syne-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/syne/Syne-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/syne/Syne-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/syne/Syne-ExtraBold.ttf
+          weight: 800
     - family: Inter
       fonts:
+        - asset: assets/fonts/inter/Inter_18pt-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/inter/Inter_18pt-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/inter/Inter_18pt-Light.ttf
+          weight: 300
         - asset: assets/fonts/inter/Inter_18pt-Regular.ttf
           weight: 400
         - asset: assets/fonts/inter/Inter_18pt-Medium.ttf
           weight: 500
+        - asset: assets/fonts/inter/Inter_18pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/inter/Inter_18pt-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/inter/Inter_18pt-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/inter/Inter_24pt-Black.ttf
+          weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

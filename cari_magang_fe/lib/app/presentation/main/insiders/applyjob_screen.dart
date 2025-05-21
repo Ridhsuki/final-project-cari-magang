@@ -153,6 +153,7 @@ class __ContentState extends State<_Content> {
                               'Application',
                               style: TextStyle(
                                 fontSize: 22,
+                                fontFamily: 'Urbanist',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -161,6 +162,8 @@ class __ContentState extends State<_Content> {
                               '(Insert Below)',
                               style: TextStyle(
                                 fontSize: 16,
+                                fontFamily: 'Urbanist',
+                                fontWeight: FontWeight.bold,
                                 color: Appcolors.primaryColor,
                               ),
                             ),
@@ -172,7 +175,8 @@ class __ContentState extends State<_Content> {
                         "CV",
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -192,7 +196,8 @@ class __ContentState extends State<_Content> {
                         "Sertification",
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -215,13 +220,15 @@ class __ContentState extends State<_Content> {
                               'Summary',
                               style: TextStyle(
                                 fontSize: 20,
+                                fontFamily: 'Urbanist',
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               'Personal User Data',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 20,
+                                fontFamily: 'Urbanist',
                                 color: Appcolors.primaryColor,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -271,6 +278,8 @@ class __ContentState extends State<_Content> {
                                       'Save & Apply',
                                       style: TextStyle(
                                         fontSize: 16,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),

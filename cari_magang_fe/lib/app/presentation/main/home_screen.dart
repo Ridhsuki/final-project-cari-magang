@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     thisLocation = loc == 'Semua' ? null : loc;
                                   });
                                 },
-                                selectedColor: Colors.deepOrange,
+                                selectedColor: Appcolors.fourthColor,
                                 labelStyle: TextStyle(
                                   color:
                                       isSelected ? Colors.white : Colors.black,
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         status == 'Semua' ? null : status;
                                   });
                                 },
-                                selectedColor: Colors.deepOrange,
+                                selectedColor: Appcolors.fourthColor,
                                 labelStyle: TextStyle(
                                   color:
                                       isSelected ? Colors.white : Colors.black,
@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     thisSystem = sys == 'Semua' ? null : sys;
                                   });
                                 },
-                                selectedColor: Colors.deepOrange,
+                                selectedColor: Appcolors.fourthColor,
                                 labelStyle: TextStyle(
                                   color:
                                       isSelected ? Colors.white : Colors.black,
@@ -191,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Center(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
+                            backgroundColor: Appcolors.fourthColor,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 24,
                               vertical: 12,
