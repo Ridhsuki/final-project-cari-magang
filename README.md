@@ -10,3 +10,14 @@ Youtube Presentation
 App Release
 Presentation
 FIgma Design
+
+
+Add docs and release
+
+Documentation Readme including:
+- Video Demo By Hadil
+- PPT Canva
+- FIgma Design
+- ERD
+- kelompok
+- Screenshoot
