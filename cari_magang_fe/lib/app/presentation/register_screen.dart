@@ -170,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Appcolors.primaryColor.withOpacity(0.5),
+                                color: Appcolors.primaryColor.withValues(alpha: 0.5),
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -194,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Appcolors.primaryColor.withOpacity(0.5),
+                                color: Appcolors.primaryColor.withValues(alpha: 0.5),
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -220,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Appcolors.primaryColor.withOpacity(0.5),
+                                color: Appcolors.primaryColor.withValues(alpha: 0.5),
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -246,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Appcolors.primaryColor.withOpacity(0.5),
+                                color: Appcolors.primaryColor.withValues(alpha: 0.5),
                               ),
                             ),
                             border: OutlineInputBorder(

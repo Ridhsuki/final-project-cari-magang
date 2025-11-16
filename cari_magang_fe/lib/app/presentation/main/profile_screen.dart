@@ -302,7 +302,6 @@ class _ContentState extends State<_Content> {
               });
             },
             onSave: () {
-              print("Gambar yang akan diupdate: $_profileImageToUpdate");
               context.read<ProfileCubit>().updateUser(
                 name: nameEditController.text,
                 placeOfBirth: placeOfBirthEditController.text,

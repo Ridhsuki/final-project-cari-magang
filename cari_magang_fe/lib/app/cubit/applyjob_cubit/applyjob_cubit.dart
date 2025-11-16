@@ -29,8 +29,8 @@ class ApplyJobCubit extends Cubit<ApplyJobState> {
       certificate: certificate,
     );
 
-    log(result.isLeft.toString() + 'left');
-    log(result.isRight.toString() + 'right');
+    log('${result.isLeft}left');
+    log('${result.isRight}right');
 
     result.fold(
       (failure) => emit(
