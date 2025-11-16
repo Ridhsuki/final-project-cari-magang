@@ -240,32 +240,32 @@ class _JobDetailWidgetState extends State<JobDetailWidget> {
                       color: Appcolors.fourthColor,
                     ),
                     onPressed: () async {
-                      await context.read<SavedCubit>().toggleSaved(
+                      final ctx = context;
+                      await ctx.read<SavedCubit>().toggleSaved(
                         widget.internshipId,
                       );
-                      final isCurrentlyBookmarked = context
+                      if (!ctx.mounted) return;
+                      final isCurrentlyBookmarked = ctx
                           .read<SavedCubit>()
                           .isSaved(widget.internshipId);
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Appcolors.fourthColor,
-                            content: Text(
-                              isCurrentlyBookmarked
-                                  ? 'Removed from saved'
-                                  : 'Saved!',
-                              style: TextStyle(
-                                color: Appcolors.secondaryColor,
-                                fontFamily: 'Inter',
-                              ),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(11),
+                      ScaffoldMessenger.of(ctx).showSnackBar(
+                        SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Appcolors.fourthColor,
+                          content: Text(
+                            isCurrentlyBookmarked
+                                ? 'Removed from saved'
+                                : 'Saved!',
+                            style: TextStyle(
+                              color: Appcolors.secondaryColor,
+                              fontFamily: 'Inter',
                             ),
                           ),
-                        );
-                      }
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),
