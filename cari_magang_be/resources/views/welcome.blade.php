@@ -11,26 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     @livewireStyles
     <style>
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        ::selection {
-            background-color: #F66527;
-            color: #fff;
-        }
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}.animate-float{animation:float 6s ease-in-out infinite}::selection{background-color:#F66527;color:#fff}
     </style>
 </head>
 
@@ -113,10 +94,14 @@
                 <div class="text-xl font-bold">CariMagang</div>
                 <!-- Footer Links -->
                 <div class="flex space-x-6">
-                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#FAF3E3] hover:text-[#F66527]">Tentang</a>
-                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#FAF3E3] hover:text-[#F66527]">Kebijakan Privasi</a>
-                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#FAF3E3] hover:text-[#F66527]">Syarat dan Ketentuan</a>
-                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#FAF3E3] hover:text-[#F66527]">Bantuan</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate
+                        class="text-[#FAF3E3] hover:text-[#F66527]">Tentang</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate
+                        class="text-[#FAF3E3] hover:text-[#F66527]">Kebijakan Privasi</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="text-[#FAF3E3] hover:text-[#F66527]">Syarat
+                        dan Ketentuan</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate
+                        class="text-[#FAF3E3] hover:text-[#F66527]">Bantuan</a>
                     <a href="https://github.com/Ridhsuki/final-project-cari-magang" target="_blank"
                         class="text-[#FAF3E3] hover:text-[#F66527]">GitHub</a>
                 </div>
@@ -127,8 +112,10 @@
             <div class="flex flex-col md:hidden text-center space-y-2 text-xs">
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Tentang</a>
-                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Kebijakan Privasi</a>
-                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Syarat & Ketentuan</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Kebijakan
+                        Privasi</a>
+                    <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Syarat &
+                        Ketentuan</a>
                     <a href="{{ route('comingsoon') }}" wire:navigate class="hover:text-[#F66527]">Bantuan</a>
                     <a href="https://github.com/Ridhsuki/final-project-cari-magang" target="_blank"
                         class="hover:text-[#F66527]">GitHub</a>

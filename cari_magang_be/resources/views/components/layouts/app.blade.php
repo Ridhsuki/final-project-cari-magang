@@ -10,23 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>{{ $title ?? 'Page Title' }} | Cari Magang</title>
     <style>
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 0.2;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-
-        ::selection {
-            background-color: #F66527;
-            color: #fff;
-        }
+        @keyframes pulse{0%,100%{opacity:.2}50%{opacity:.5}}::selection{background-color:#F66527;color:#fff}
     </style>
 </head>
 
